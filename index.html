@@ -2,7 +2,6 @@
 <html>
 
 <head>
-    <!-- <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script> -->
     <link href="https://cdn.quilljs.com/1.2.6/quill.snow.css" rel="stylesheet">
     <script src="https://cdn.quilljs.com/1.2.6/quill.min.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
@@ -14,34 +13,38 @@
 
 <body>
 
-    <div id="sideBar" class="sideBar">
-        <!--Sidans sidebar-->
-        <img class="logo" src="logo.png" alt="logga" onmouseover="openNav()">
-        <!--Logga-->
-        <i class='fas fa-plus'></i>
-        <!--Ikoner-->
-        <i class='far fa-folder' onclick="openNav()"></i>
-        <i class='far fa-star'></i>
-        <i class='fas fa-cog'></i>
-    </div>
+    <div class="maincontainer">
 
-    <section class="secondSideBar" id="secondSideBar">
-        <div class="hight">
-            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
-            <form id="searchForm">
-                <input type="search" placeholder="Search..." name="search" id="search">
-            </form>
-            <a class="line" href="#"></a>
-            <div id="justText"></div>
+        <section class="firstSideBar">
+            <div id="sideBar" class="sideBar">
+                <!--Sidans sidebar-->
+                <img class="logo" src="Quill2.png" alt="logga" onmouseover="openNav()">
+                <!--Logga-->
+                <i class='fas fa-plus'></i>
+                <!--Ikoner-->
+                <i class='far fa-folder' onclick="openNav()"></i>
+                <i class='far fa-heart'></i>
+                <i class='fas fa-cog'></i>
+            </div>
+        </section>
+
+        <section class="secondSideBar" id="secondSideBar">
+            <div class="hight">
+                <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+                <form id="searchForm">
+                    <input type="search" placeholder="Search..." name="search" id="search">
+                </form>
+                <a class="line" href="#"></a>
+                <div id="justText"></div>
+            </div>
+        </section>
+
+        <main></main>
+        <div id="editor">
+            <p id="quillEditor"></p>
         </div>
-    </section>
 
-    <div id="editor">
-        <p id="quillEditor"></p>
-    </div>
-
-    <div class="knappar">
-        <a href="#" class="savebtn">Add</a>
+        </main>
     </div>
 
     <!--Popup-->

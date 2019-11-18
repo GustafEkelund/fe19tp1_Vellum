@@ -1,7 +1,9 @@
 let noteList = [];
-const savebtn = document.querySelector('.savebtn');
+const savebtn = document.querySelector("#sideBar > i.fas.fa-plus")
 const justText = document.querySelector('#justText');
 const input = document.querySelector('#search');
+const fav = document.querySelector("#sideBar > i.far.fa-heart");
+const saveToFav = document.querySelector('#saveFav');
 
 // Sidabar
 function openNav() {
@@ -50,13 +52,14 @@ savebtn.addEventListener('click', () => {
   newDiv.classList.add('div');
   let newDivList = {
     title: `<strong>Title:</strong> ${note.title}....`,
-    date: `<strong>Datum:</strong>${Date(note.id)}`
+    date: `<strong>Datum:</strong>${Date(note.id)}`,
+    icon: `<span class="far fa-heart"></span>`
   };
-  newDiv.innerHTML = `${newDivList.title} <br> ${newDivList.date}`;
+  newDiv.innerHTML = `${newDivList.icon} <br> ${newDivList.title} <br> ${newDivList.date}`;
 
   noteList.unshift(note);
   saveNotes();
-  //clearEditor();
+  clearEditor();
 
 });
 
@@ -104,9 +107,10 @@ function renderDocs() {
     newDiv.classList.add('div');
     let newDivList = {
       title: `<strong>Title:</strong><span class = 'span'> ${e.title}....</span>`,
-      date: `<strong>Datum:</strong>${Date(e.id)}`
+      date: `<strong>Datum:</strong>${Date(e.id)}`,
+      icon: `<span class="far fa-heart"></span>`
     };
-    newDiv.innerHTML = `${newDivList.title} <br> ${newDivList.date}`;
+    newDiv.innerHTML = `${newDivList.icon} ${newDivList.title} <br> ${newDivList.date}`;
   });
 }
 
@@ -125,10 +129,30 @@ justText.addEventListener('click', e => {
 
     }
   }
+})
 
+function search() {
+  let input = document.querySelector('#search');
+  let filter = input.value.toUpperCase();
+  for (let i = 0; i < justText.childNodes.length; i++) {
+    textValue = justText.childNodes[i].childNodes[1].textContent || justText.childNodes[i].childNodes[1].innerText;
+    if (textValue.toUpperCase().indexOf(filter) > -1) {
+      justText.childNodes[i].style.display = "";
+    } else {
+      justText.childNodes[i].style.display = 'none';
+    }
+  }
+}
+
+input.addEventListener('keyup', e => {
+  search();
+  input.addEventListener('click', e => {
+    justText.childNodes.forEach(e => { e.style.display = "block" })
+  })
 })
 
 /* Popup */
+
 // Get the modal
 var modal = document.getElementById("myModal");
 // Get the button that opens the modal
@@ -151,24 +175,34 @@ window.onclick = function (event) {
   }
 }
 
-function search() {
-  let input = document.querySelector('#search');
-  let filter = input.value.toUpperCase();
+/* saveToFav.addEventListener('click', e => {
+  console.log(e.target);
+  e.preventDefault();
   for (let i = 0; i < justText.childNodes.length; i++) {
-    textValue = justText.childNodes[i].childNodes[1].textContent || justText.childNodes[i].childNodes[1].innerText;
-    if (textValue.toUpperCase().indexOf(filter) > -1) {
-      justText.childNodes[i].style.display = "";
-    } else {
-      justText.childNodes[i].style.display = 'none';
+    if (justText.childNodes[i].classList.contains('picked')) {
+      for (let j = 0; j < noteList.length; j++) {
+        if (justText.childNodes[i].id == noteList[j].id) {
+          noteList[j].favourite = true;
+        }
+      }
     }
   }
-}
-
-
-
-input.addEventListener('keyup', e => {
-  search();
-  input.addEventListener('click', e => {
-    justText.childNodes.forEach(e => { e.style.display = "block" })
-  })
 })
+ */
+/* fav.addEventListener('click', e => {
+  openNav();
+  for (let i = 0; i < noteList.length; i++) {
+    if (!noteList[i].favourite) {
+      console.log(noteList[i])
+      for (j = 0; j < justText.childNodes.length; j++) {
+        if (noteList[i].id = justText.childNodes[j].id) {
+          justText.childNodes[j].style.display = 'none';
+        } else {justText.childNodes[j].style.display = 'block'}
+      }
+
+    }
+
+  }
+}) */
+
+const favIcon = document.querySelectorAll('.secondSideBar div span');
