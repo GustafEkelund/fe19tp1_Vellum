@@ -2,14 +2,109 @@
     font-family: 'Roboto', sans-serif;
 }  
 
-#editor{
-    max-width: 90%;
-    width: 90%;
+body {
+    display: flex;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    position: relative;
+}
+
+/*Sidans logga*/
+.logo {
+    max-width: 100%;
+    max-height: 100%;
+    cursor: pointer;
+    border-bottom: 1px solid grey;
+}
+
+/* Fixed sideBar */
+.navbars {
+    display: flex;
+    flex-direction: row;
+    height: 85vh;
+    width: 15vw;
+}
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    margin-top: 10px;
+    z-index: 2;
+    background: #40729c;
+}
+
+.sideBarLinks {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 50%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    z-index: 1;
+}
+
+.sideBarLinks li {
+    display: flex;
+    justify-content: center;
+}
+
+/* second side bar */
+.secondSideBar {
+    display: flex;
+    flex-direction: column;
+    width: 25%;
     position: absolute;
-    margin-left: 130px;
+    border: 2px solid;
+    margin-top: 10px;
+    background: #40729c;
+    z-index: 1;
+    transform: translateX(-100%);
+    transition: transform 0.5s ease-in;
+}
+
+
+/* paseted nav */
+.secondSideBarLinks {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.secondSideBarLinks li {
+    opacity: 0;
+}
+
+.secondSideBar-active {
+    transform: translateX(45%);
+}
+
+@keyframes secondSideBarLinksFade {
+    from{
+        opacity: 0;
+        transform: translateX(-50px);
+    }
+    to{
+        opacity: 1;
+        transform: translateX(0px);
+    }
+}
+
+
+.main {
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    width: 65vw;
+}
+
+#editor{
+    width: 100%;
+    height: 100%;
+    position: absolute;
     transition: 1s;
-    top: 0;
-    height: 93%;
   }
 
   #quillEditor { /* Inside editor */
@@ -23,7 +118,6 @@
 /* Knappar */
 
 .savebtn {
-    z-index: 1;
     position: absolute;
     top: 0;
     margin-top: 50%;
@@ -39,52 +133,10 @@
     transition: all 0.5s ease-in-out 0s;
 }
 
-/*Sidans logga*/
-
-.logo {
-    max-width: 50%;
-    max-height: 50%;
-    margin-left: 26px;
-    cursor: pointer;
-    border-bottom: 1px solid grey;
-}
-
-/* Fixed sideBar */
-
-.sideBar {
-    height: 100%;
-    width: 130px;
-    position: fixed;
-    z-index: 1;
-    top: 0;
-    left: 0;
-    background-color: #c8e6c9;
-    padding-top: 20px;
-    overflow: visible;
-    border-right: lightgrey solid 0.5px;
-}
-
-/* Ikoner */
-.fa-plus:before, .fa-star:before, .fa-cog:before, .fa-folder:before { 
-    padding: 0px 15px 8px 16px;
-    display: block;
-    margin-top: 50%;
-    margin-left: 34px;
-    cursor: pointer;
-    border-bottom: 1px solid grey;
-}
-
-.fa-plus:hover, .fa-folder:hover, .fa-cog:hover, .fa-star:hover {
- margin-left: 10px;
- transition: 1s;
-}
-
-/* Second Sidebar */
 
 #search {
     margin-bottom: 20px;
     text-align: center;
-    margin-left: 30%;
     padding: 10px;
     border-radius: 8px;
     border: 1px solid lightgray;
@@ -108,15 +160,12 @@ input:valid ~ span:after {
     position: absolute;
 }
 
-.hight {
-    margin-top: 2%;
-}
 
 .line {
     border-bottom: 1px solid grey;
 }
 
-.secondSideBar {
+/* .secondSideBar {
     height: 100%;
     width: 0;
     position: fixed;
@@ -127,29 +176,26 @@ input:valid ~ span:after {
     overflow-x: hidden;
     transition: 1s;
     border-right: lightgrey solid 0.5px;
-}
+} */
 
 .div {
-   padding: 0px 34px 0px 5px;
    word-break: break-all;
    transition: 0.3s;
    border: 1px solid grey;
    border-radius: 5px;
-   width: 250px;
+   width: 90%;
    height: 100px;
-   margin: 5px;
+   margin-bottom: 5%;
    cursor: pointer;
 }
 
 .picked {
-   padding: 0px 34px 0px 5px;
    word-break: break-all;
    transition: 0.3s;
    border: 4px solid limegreen;
    border-radius: 5px;
-   width: 250px;
+   width: 95%;
    height: 100px;
-   margin: 5px;
    cursor: pointer;
  }
 
@@ -159,18 +205,16 @@ input:valid ~ span:after {
     margin-left: 7px;
 }
 
-.secondSideBar a {
+/* .secondSideBar a {
     padding: 6px 6px 8px 16px;
     text-decoration: none;
     font-size: 15px;
     color: black;
     display: block;
     transition: 0.3s;
-}
+} */
 
-.closebtn {
-    margin-left: 250px;
-}
+
 
 /* Popup */
 
@@ -197,6 +241,7 @@ input:valid ~ span:after {
     border-radius: 20px;
     width: 30%;
   }
+
   ul{
       list-style-type: none;
   }

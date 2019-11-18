@@ -3,7 +3,7 @@ const savebtn = document.querySelector('.savebtn');
 const justText = document.querySelector('#justText');
 const input = document.querySelector('#search');
 
-// Sidabar
+/* // Sidabar
 function openNav() {
   document.getElementById("secondSideBar").style.width = "300px";
   document.getElementById("editor").style.width = "70%";
@@ -13,7 +13,28 @@ function closeNav() {
   document.getElementById("secondSideBar").style.width = "0";
   document.getElementById("editor").style.width = "90%";
   document.getElementById("editor").style.marginLeft = "130px";
-}
+} */
+
+const navSlider = () => {
+  const doclist = document.querySelector('#doclist');
+  const secondSideBar = document.querySelector('.secondSideBar');
+  const secondSideBarLinks = document.querySelectorAll('.secondSideBarLinks li');
+  // Toggle Nav
+  doclist.addEventListener('click', () => {
+    secondSideBar.classList.toggle('secondSideBar-active');
+      
+       //Animation Links
+      secondSideBarLinks.forEach((link, index) => {
+          if(link.style.animation){
+              link.style.animation = ''
+          }else {
+              link.style.animation = `secondSideBarLinksFade 0.5s ease forwards ${index / 7 + 0.5}s`;
+          }
+      }); 
+  });
+};
+
+navSlider();
 /* Editor */
 
 var Delta = Quill.import('delta');
@@ -56,8 +77,7 @@ savebtn.addEventListener('click', () => {
 
   noteList.unshift(note);
   saveNotes();
-  //clearEditor();
-
+  clearEditor();
 });
 
 // Load localstorage när sidan laddar
