@@ -2,8 +2,9 @@ let noteList = [];
 const savebtn = document.querySelector("#sideBar > i.fas.fa-plus")
 const justText = document.querySelector('#justText');
 const input = document.querySelector('#search');
-const fav = document.querySelector("#sideBar > i.far.fa-heart");
 const saveToFav = document.querySelector('#saveFav');
+const fav = document.querySelector('.fav');
+const favIcon = document.querySelector("#sideBar > i.far.fa-heart");
 
 // Sidabar
 function openNav() {
@@ -53,9 +54,10 @@ savebtn.addEventListener('click', () => {
   let newDivList = {
     title: `<strong>Title:</strong> ${note.title}....`,
     date: `<strong>Datum:</strong>${Date(note.id)}`,
-    icon: `<span class="far fa-heart"></span>`
+    // icon: `<span class="far fa-heart"></span>`
+    check: `<input type="checkbox" class="check">`
   };
-  newDiv.innerHTML = `${newDivList.icon} <br> ${newDivList.title} <br> ${newDivList.date}`;
+  newDiv.innerHTML = `${newDivList.check} ${newDivList.title} <br> ${newDivList.date}`;
 
   noteList.unshift(note);
   saveNotes();
@@ -108,9 +110,10 @@ function renderDocs() {
     let newDivList = {
       title: `<strong>Title:</strong><span class = 'span'> ${e.title}....</span>`,
       date: `<strong>Datum:</strong>${Date(e.id)}`,
-      icon: `<span class="far fa-heart"></span>`
+      // icon: `<span class="far fa-heart"></span>`
+      check: `<input type="checkbox" class="check">`
     };
-    newDiv.innerHTML = `${newDivList.icon} ${newDivList.title} <br> ${newDivList.date}`;
+    newDiv.innerHTML = `${newDivList.check} ${newDivList.title} <br> ${newDivList.date}`;
   });
 }
 
@@ -175,6 +178,20 @@ window.onclick = function (event) {
   }
 }
 
+function displayChecked() {
+  let checkboxes = document.querySelectorAll('.fav > #justText > div > input');
+  let arrayOfCheckboxes = Array.from(checkboxes);
+  arrayOfCheckboxes.map(e => {
+    if (e.checked) { e.parentElement.style.display = 'block' }
+    else { e.parentElement.style.display = 'none' }
+  })
+}
+
+favIcon.addEventListener('click', e => {
+  e.preventDefault();
+  displayChecked();
+})
+
 /* saveToFav.addEventListener('click', e => {
   console.log(e.target);
   e.preventDefault();
@@ -205,4 +222,4 @@ window.onclick = function (event) {
   }
 }) */
 
-const favIcon = document.querySelectorAll('.secondSideBar div span');
+// const favIcon = document.querySelectorAll('.secondSideBar div span');
