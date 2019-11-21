@@ -108,7 +108,7 @@ function renderDocs() {
     justText.appendChild(newDiv);
     newDiv.classList.add('div');
     let newDivList = {
-      title: `<strong>Title:</strong><span class = 'span'> ${e.title}....</span>`,
+      title: `<strong>Title:</strong><span class = 'span ${e.favourite ? 'isFav' : ''}'> ${e.title}....</span>`,
       date: `<strong>Datum:</strong>${Date(e.id)}`,
       // icon: `<span class="far fa-heart"></span>`
       check: `<input type="checkbox" class="check">`
@@ -121,15 +121,31 @@ function renderDocs() {
 justText.addEventListener('click', e => {
   const newDiv = document.querySelectorAll('#justText > div');
   const loadData = JSON.parse(localStorage.getItem('quire')).notes;
-  for (let i = 0; i < loadData.length; i++) {
-    if (loadData[i].id == e.target.id) {
-      editor.setContents(loadData[i].contents);
-      newDiv.forEach(event => {
-        if (e.target == event) {
-          event.classList.add('picked');
-        } else { event.classList.remove('picked') }
-      })
+  let noteID = e.target.closest("div").id
+  //let selectedNote;
+  const selectedNote = noteList.find(note => note.id === Number(noteID))
+  /*  for (i = 0; i < noteList.length; i++) {
+     if (noteList[i].id === Number(noteID)) {
+       selectedNote = noteList[i];
+     }
+   } */
+  console.log(selectedNote)
 
+  if (e.target.classList.contains("span")) {
+    selectedNote.favourite = !selectedNote.favourite
+    saveNotes()
+    e.target.classList.toggle("isFav")
+  } else {
+    for (let i = 0; i < loadData.length; i++) {
+      if (loadData[i].id == e.target.id) {
+        editor.setContents(loadData[i].contents);
+        newDiv.forEach(event => {
+          if (e.target == event) {
+            event.classList.add('picked');
+          } else { event.classList.remove('picked') }
+        })
+
+      }
     }
   }
 })
