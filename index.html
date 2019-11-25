@@ -13,39 +13,46 @@
 
 <body>
 
-    <div class="maincontainer">
+    <div class="mainContainer">
 
-        <section class="firstSideBar">
-            <div id="sideBar" class="sideBar">
+    <nav class="navContainer">
+
+        <div class="firstSideBarContainer">
+            <ul id="firstSideBar" class="firstSideBar">
                 <!--Sidans sidebar-->
-                <img class="logo" src="Quill2.png" alt="logga" onmouseover="openNav()">
+                <li><img class="logo" src="Quill2.png" alt="logga" onmouseover="openNav()"></li>
                 <!--Logga-->
-                <i class='fas fa-plus'></i>
+                <li><i class='fas fa-plus'></i></li>
                 <!--Ikoner-->
-                <i class='far fa-folder' onclick="openNav()"></i>
-                <i class='far fa-heart'></i>
-                <i class='fas fa-cog'></i>
-            </div>
-        </section>
-
-        <section class="secondSideBar" id="secondSideBar">
-            <div class="hight">
-                <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
-                <form id="searchForm">
-                    <input type="search" placeholder="Search..." name="search" id="search">
-                </form>
-                <a class="line" href="#"></a>
-                <div id="justText"></div>
-            </div>
-        </section>
-
-        <main></main>
-        <div id="editor">
-            <i id="print" class="fa fa-print"></i>
-            <p id="quillEditor"></p>
+                <li><i class='far fa-folder' onclick="openNav()"></i></li>
+                <li><i class='far fa-heart'></i></li>
+                <li><i class='fas fa-cog'></i></li>
+            </ul>
         </div>
 
+        <div class="secondSideBarContainer" id="secondSideBarContainer">
+            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+            <ul class="secondSideBar">
+                <li>
+                    <form id="searchForm">
+                        <input type="search" placeholder="Search..." name="search" id="search">
+                    </form>
+                </li>
+                <li><div id="noteContent"></div></li>
+            </ul>
+        </div>
+        
+    </nav>
+
+        <main class="mainEditorContainer">
+
+            <div id="editor">
+                <i id="print" class="fa fa-print"></i>
+                <p id="quillEditor"></p>
+            </div>
+
         </main>
+
     </div>
 
     <!--Popup-->

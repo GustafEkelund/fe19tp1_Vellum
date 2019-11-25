@@ -1,10 +1,11 @@
 let noteList = [];
 const savebtn = document.querySelector("#sideBar > i.fas.fa-plus")
-const justText = document.querySelector('#justText');
+const noteContent = document.querySelector('#noteContent');
 const input = document.querySelector('#search');
 const saveToFav = document.querySelector('#saveFav');
 const favIcon = document.querySelector("#sideBar > i.far.fa-heart");
-let selected;
+let selectedNote;
+const print = document.querySelector('#print');
 
 // Sidabar
 function openNav() {
@@ -58,15 +59,15 @@ function createDiv(note) {
   newDiv.id = note.id;
   newDiv.classList.add('div');
   let newDivList = {
-    title: `<strong>Title:</strong><span>${note.title}....</span>`,
-    date: `<strong>Datum:</strong><span>${Date(note.id)}</span>`,
+    title: `<strong><span>${note.title}....</span></strong>`,
+    date: `<span>${Date(note.id)}</span>`,
     icon: `<span class='far fa-heart ${note.favourite ? 'fas fa-heart' : ''}'></span>`
   };
   newDiv.innerHTML = ` ${newDivList.title} <br> ${newDivList.date} ${newDivList.icon}`;
   
   if(document.readyState === "complete" || document.readyState === "loaded"){
-    justText.insertBefore(newDiv, justText.childNodes[0])
-  } else {justText.appendChild(newDiv)}
+    noteContent.insertBefore(newDiv, noteContent.childNodes[0])
+  } else {noteContent.appendChild(newDiv)}
 }
 
 // Load localstorage när sidan laddar
@@ -110,8 +111,8 @@ function renderDocs() {
 }
 
 //Click event för divarna
-justText.addEventListener('click', e => {
-  const newDiv = document.querySelectorAll('#justText > div');
+noteContent.addEventListener('click', e => {
+  const newDiv = document.querySelectorAll('#noteContent > div');
   const loadData = JSON.parse(localStorage.getItem('quire')).notes;
   let noteID = e.target.closest("div").id;
   selectedNote = noteList.find(note => note.id === Number(noteID));
@@ -123,7 +124,7 @@ justText.addEventListener('click', e => {
 
   } else {
     for (let i = 0; i < loadData.length; i++) {
-      if (loadData[i].id == e.target.parentElement.id) {
+      if (loadData[i].id == e.target.parentElement.id || loadData[i].id == e.target.id) {
         editor.setContents(loadData[i].contents);
         newDiv.forEach(event => {
           if (e.target.parentElement === event || e.target === event) {
@@ -138,12 +139,12 @@ justText.addEventListener('click', e => {
 function search() {
   let input = document.querySelector('#search');
   let filter = input.value.toUpperCase();
-  for (let i = 0; i < justText.childNodes.length; i++) {
-    textValue = justText.childNodes[i].childNodes[2].textContent || justText.childNodes[i].childNodes[2].innerText;
+  for (let i = 0; i < noteContent.childNodes.length; i++) {
+    textValue = noteContent.childNodes[i].childNodes[2].textContent || noteContent.childNodes[i].childNodes[2].innerText;
     if (textValue.toUpperCase().indexOf(filter) > -1) {
-      justText.childNodes[i].style.display = "";
+      noteContent.childNodes[i].style.display = "";
     } else {
-      justText.childNodes[i].style.display = 'none';
+      noteContent.childNodes[i].style.display = 'none';
     }
   }
 }
@@ -151,7 +152,7 @@ function search() {
 input.addEventListener('keyup', e => {
   search();
   input.addEventListener('click', e => {
-    justText.childNodes.forEach(e => { e.style.display = "block" })
+    noteContent.childNodes.forEach(e => { e.style.display = "block" })
   })
 })
 
@@ -180,7 +181,7 @@ window.onclick = function (event) {
 }
 
 function displayChecked() {
-  let checkboxes = document.querySelectorAll('.fav > #justText > div > input');
+  let checkboxes = document.querySelectorAll('.fav > #noteContent > div > input');
   let arrayOfCheckboxes = Array.from(checkboxes);
   arrayOfCheckboxes.map(e => {
     if (e.checked) { e.parentElement.style.display = 'block' }
@@ -188,20 +189,20 @@ function displayChecked() {
   })
 }
 
-let clicks = 0;
+let clicks = 1;
 favIcon.addEventListener('click', e => {
-  let arrayOfDivs = Array.from(justText.childNodes);
-  clicks += 1;
+  let arrayOfDivs = Array.from(noteContent.childNodes);
   
+  clicks += 1;
 
   console.log(clicks);
   arrayOfDivs.forEach(div => {
     let noteID = div.id;
     selectedNote = noteList.find(note => note.id === Number(noteID));
     if(clicks % 2 === 0) {
-    if(selectedNote.favourite){
-      div.style.display = "block"
-    } else { div.style.display = "none"}
+      if(selectedNote.favourite){
+      div.style.display = "block";
+      } else { div.style.display = "none"}
     } else {div.style.display ="block"}
 
   })
