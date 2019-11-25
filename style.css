@@ -51,10 +51,6 @@
     transition: all 0.5s ease-in-out 0s;
 }
 
-.isFav {
-    background-color: red;
-}
-
 /*Sidans logga*/
 
 .logo {
@@ -100,7 +96,7 @@
     border-bottom: 1px solid grey;
 }
 
-.fa-plus:hover, .fa-folder:hover, .fa-cog:hover, .fa-heart:hover {
+.fa-plus:hover, .fa-folder:hover, .fa-cog:hover, .fa-heart:hover  {
  margin-left: 10px;
  transition: 1s;
 }
@@ -250,4 +246,14 @@ input:valid ~ span:after {
     text-shadow: 3px 3px 2px lightgrey;
   }
 
- 
+  .isFav {
+    background-color: red;
+}
+
+.hello {
+    background-color: greenyellow;
+}
+
+.yes {
+    background-color: hotpink;
+}

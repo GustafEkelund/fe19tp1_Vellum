@@ -3,8 +3,8 @@ const savebtn = document.querySelector("#sideBar > i.fas.fa-plus")
 const justText = document.querySelector('#justText');
 const input = document.querySelector('#search');
 const saveToFav = document.querySelector('#saveFav');
-const fav = document.querySelector('.fav');
 const favIcon = document.querySelector("#sideBar > i.far.fa-heart");
+let selected;
 
 // Sidabar
 function openNav() {
@@ -47,23 +47,27 @@ savebtn.addEventListener('click', () => {
     started: true
   };
 
-  let newDiv = document.createElement("div");
-  newDiv.id = note.id;
-  justText.insertBefore(newDiv, justText.childNodes[0]);
-  newDiv.classList.add('div');
-  let newDivList = {
-    title: `<strong>Title:</strong> ${note.title}....`,
-    date: `<strong>Datum:</strong>${Date(note.id)}`,
-    // icon: `<span class="far fa-heart"></span>`
-    check: `<input type="checkbox" class="check">`
-  };
-  newDiv.innerHTML = `${newDivList.check} ${newDivList.title} <br> ${newDivList.date}`;
-
+  createDiv(note);
   noteList.unshift(note);
   saveNotes();
   clearEditor();
-
 });
+
+function createDiv(note) {
+  let newDiv = document.createElement("div");
+  newDiv.id = note.id;
+  newDiv.classList.add('div');
+  let newDivList = {
+    title: `<strong>Title:</strong><span>${note.title}....</span>`,
+    date: `<strong>Datum:</strong><span>${Date(note.id)}</span>`,
+    icon: `<span class='far fa-heart ${note.favourite ? 'fas fa-heart' : ''}'></span>`
+  };
+  newDiv.innerHTML = ` ${newDivList.title} <br> ${newDivList.date} ${newDivList.icon}`;
+  
+  if(document.readyState === "complete" || document.readyState === "loaded"){
+    justText.insertBefore(newDiv, justText.childNodes[0])
+  } else {justText.appendChild(newDiv)}
+}
 
 // Load localstorage när sidan laddar
 window.addEventListener('DOMContentLoaded', (event) => {
@@ -102,59 +106,40 @@ function saveNotes() {
 
 //Renderar dokumentet samt div när sidan laddas om
 function renderDocs() {
-  noteList.forEach(e => {
-    let newDiv = document.createElement("div");
-    newDiv.id = e.id;
-    justText.appendChild(newDiv);
-    newDiv.classList.add('div');
-    let newDivList = {
-      title: `<strong>Title:</strong><span class = 'span ${e.favourite ? 'isFav' : ''}'> ${e.title}....</span>`,
-      date: `<strong>Datum:</strong>${Date(e.id)}`,
-      // icon: `<span class="far fa-heart"></span>`
-      check: `<input type="checkbox" class="check">`
-    };
-    newDiv.innerHTML = `${newDivList.check} ${newDivList.title} <br> ${newDivList.date}`;
-  });
+  noteList.forEach(note => createDiv(note));
 }
 
 //Click event för divarna
 justText.addEventListener('click', e => {
   const newDiv = document.querySelectorAll('#justText > div');
   const loadData = JSON.parse(localStorage.getItem('quire')).notes;
-  let noteID = e.target.closest("div").id
-  //let selectedNote;
-  const selectedNote = noteList.find(note => note.id === Number(noteID))
-  /*  for (i = 0; i < noteList.length; i++) {
-     if (noteList[i].id === Number(noteID)) {
-       selectedNote = noteList[i];
-     }
-   } */
-  console.log(selectedNote)
-
-  if (e.target.classList.contains("span")) {
+  let noteID = e.target.closest("div").id;
+  selectedNote = noteList.find(note => note.id === Number(noteID));
+  
+  if (e.target.classList.contains('far')) {
     selectedNote.favourite = !selectedNote.favourite
-    saveNotes()
-    e.target.classList.toggle("isFav")
+    saveNotes();
+    e.target.classList.toggle('fas'); 
+
   } else {
     for (let i = 0; i < loadData.length; i++) {
-      if (loadData[i].id == e.target.id) {
+      if (loadData[i].id == e.target.parentElement.id) {
         editor.setContents(loadData[i].contents);
         newDiv.forEach(event => {
-          if (e.target == event) {
+          if (e.target.parentElement === event || e.target === event) {
             event.classList.add('picked');
           } else { event.classList.remove('picked') }
         })
-
       }
     }
   }
-})
+}) 
 
 function search() {
   let input = document.querySelector('#search');
   let filter = input.value.toUpperCase();
   for (let i = 0; i < justText.childNodes.length; i++) {
-    textValue = justText.childNodes[i].childNodes[1].textContent || justText.childNodes[i].childNodes[1].innerText;
+    textValue = justText.childNodes[i].childNodes[2].textContent || justText.childNodes[i].childNodes[2].innerText;
     if (textValue.toUpperCase().indexOf(filter) > -1) {
       justText.childNodes[i].style.display = "";
     } else {
@@ -203,39 +188,21 @@ function displayChecked() {
   })
 }
 
+let clicks = 0;
 favIcon.addEventListener('click', e => {
-  e.preventDefault();
-  displayChecked();
+  let arrayOfDivs = Array.from(justText.childNodes);
+  clicks += 1;
+  
+
+  console.log(clicks);
+  arrayOfDivs.forEach(div => {
+    let noteID = div.id;
+    selectedNote = noteList.find(note => note.id === Number(noteID));
+    if(clicks % 2 === 0) {
+    if(selectedNote.favourite){
+      div.style.display = "block"
+    } else { div.style.display = "none"}
+    } else {div.style.display ="block"}
+
+  })
 })
-
-/* saveToFav.addEventListener('click', e => {
-  console.log(e.target);
-  e.preventDefault();
-  for (let i = 0; i < justText.childNodes.length; i++) {
-    if (justText.childNodes[i].classList.contains('picked')) {
-      for (let j = 0; j < noteList.length; j++) {
-        if (justText.childNodes[i].id == noteList[j].id) {
-          noteList[j].favourite = true;
-        }
-      }
-    }
-  }
-})
- */
-/* fav.addEventListener('click', e => {
-  openNav();
-  for (let i = 0; i < noteList.length; i++) {
-    if (!noteList[i].favourite) {
-      console.log(noteList[i])
-      for (j = 0; j < justText.childNodes.length; j++) {
-        if (noteList[i].id = justText.childNodes[j].id) {
-          justText.childNodes[j].style.display = 'none';
-        } else {justText.childNodes[j].style.display = 'block'}
-      }
-
-    }
-
-  }
-}) */
-
-// const favIcon = document.querySelectorAll('.secondSideBar div span');
