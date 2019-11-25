@@ -20,6 +20,17 @@
       background-color: #fafafa;
   }
 
+  #print {
+      position: fixed;
+      margin-top: 13px;
+      margin-left: 28%;
+      cursor: pointer;
+  }
+
+  #print:hover {
+      color: blue;
+  }
+
 /* Knappar */
 
 .savebtn {

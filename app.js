@@ -206,3 +206,18 @@ favIcon.addEventListener('click', e => {
 
   })
 })
+
+function printDiv() {
+  var divContents = document.querySelector(".ql-editor").innerHTML;
+  var a = window.open('', '', 'height=1200, width=1200');
+  a.document.write('<html>');
+  a.document.write('<body > ');
+  a.document.write(divContents);
+  a.document.write('</body></html>');
+  a.document.close();
+  a.print();
+}
+
+print.addEventListener('click', () => {
+  printDiv();
+})
