@@ -13,28 +13,32 @@
 
 <body>
 
-    <div class="maincontainer">
+    <div class="mainContainer">
+
+
+        <img class="pen" src="pics/QuillPen2.png" alt="pen">
+
+        <nav class="navContainer"></nav>
 
         <section class="firstSideBar">
             <div id="sideBar" class="sideBar">
                 <!--Sidans sidebar-->
-                <img class="logo" src="Quill2.png" alt="logga" onmouseover="openNav()">
+                <img class="logo" src="pics/Quill4.png" alt="logga">
                 <!--Logga-->
                 <i class='fas fa-plus'></i>
                 <!--Ikoner-->
-                <i class='far fa-folder' onclick="openNav()"></i>
+                <i class='far fa-folder'></i>
                 <i class='far fa-heart'></i>
-                <i class='fas fa-cog'></i>
+                <i class='fas fa-moon'></i>
             </div>
         </section>
 
         <section class="secondSideBar" id="secondSideBar">
             <div class="hight">
-                <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+                <a href="javascript:void(0)" class="closebtn">×</a>
                 <form id="searchForm">
                     <input type="search" placeholder="Search..." name="search" id="search">
                 </form>
-                <a class="line" href="#"></a>
                 <div id="justText"></div>
             </div>
         </section>
@@ -55,12 +59,11 @@
         <div class="modal-content">
             <span class="close">&times;</span>
             <h2 class="welcome">Welcome to Quire</h2>
+            <img class="picModal" src="pics/QuillGuy2.png" alt="quill">
             <p>This is easy to use text editor in the browser.
-                <ul>
-                    <li>Save your documents</li><br>
-                    <li>Pick favorites</li> <br>
-                    <li>Find your documents via the search function.</li>
-                </ul>
+                    <p>Save your documents</p>
+                    <p>Pick favorites</p>
+                    <p>Find your documents via the search function.</p>
             </p>
         </div>
 

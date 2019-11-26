@@ -4,19 +4,41 @@ const justText = document.querySelector('#justText');
 const input = document.querySelector('#search');
 const saveToFav = document.querySelector('#saveFav');
 const favIcon = document.querySelector("#sideBar > i.far.fa-heart");
+const print = document.querySelector('#print');
+const openSideBar = document.querySelector('.fa-folder');
+const openSideBarLogo = document.querySelector('.logo');
+const closeBtn = document.querySelector('.closebtn');
+const darkMode = document.querySelector('.fa-moon');
 let selected;
 
 // Sidabar
 function openNav() {
   document.getElementById("secondSideBar").style.width = "300px";
-  document.getElementById("editor").style.width = "70%";
-  document.getElementById("editor").style.marginLeft = "420px";
 }
 function closeNav() {
   document.getElementById("secondSideBar").style.width = "0";
-  document.getElementById("editor").style.width = "90%";
-  document.getElementById("editor").style.marginLeft = "130px";
 }
+
+openSideBar.addEventListener ('click', () => {
+  openNav();
+})
+
+openSideBarLogo.addEventListener ('click', () => {
+  openNav();
+})
+
+closeBtn.addEventListener ('click', () => {
+  closeNav();
+})
+
+darkMode.addEventListener('click', () => {
+  var element = document.body;
+  var sideBarBlackMode = document.querySelector('.secondSideBar');
+  element.classList.toggle("dark-mode-editor");
+  sideBarBlackMode.classList.toggle("dark-mode-sidebar");
+})
+
+
 /* Editor */
 
 var Delta = Quill.import('delta');
@@ -35,6 +57,7 @@ var options = {
 };
 
 var editor = new Quill('#quillEditor', options);
+
 
 //Save button
 savebtn.addEventListener('click', () => {
@@ -58,11 +81,12 @@ function createDiv(note) {
   newDiv.id = note.id;
   newDiv.classList.add('div');
   let newDivList = {
-    title: `<strong>Title:</strong><span>${note.title}....</span>`,
+    title: `<span><strong>${note.title}</strong></span>`,
     date: `<strong>Datum:</strong><span>${Date(note.id)}</span>`,
-    icon: `<span class='far fa-heart ${note.favourite ? 'fas fa-heart' : ''}'></span>`
+    icon: `<span class='far fa-heart ${note.favourite ? 'fas fa-heart' : ''}'></span>`,
+    trash: `<span class='far fa-trash-alt delete'></span>`
   };
-  newDiv.innerHTML = ` ${newDivList.title} <br> ${newDivList.date} ${newDivList.icon}`;
+  newDiv.innerHTML = ` ${newDivList.title} ${newDivList.trash} ${newDivList.icon} <br> ${newDivList.date}`;
   
   if(document.readyState === "complete" || document.readyState === "loaded"){
     justText.insertBefore(newDiv, justText.childNodes[0])
@@ -139,7 +163,7 @@ function search() {
   let input = document.querySelector('#search');
   let filter = input.value.toUpperCase();
   for (let i = 0; i < justText.childNodes.length; i++) {
-    textValue = justText.childNodes[i].childNodes[2].textContent || justText.childNodes[i].childNodes[2].innerText;
+    textValue = justText.childNodes[i].childNodes[1].textContent || justText.childNodes[i].childNodes[1].innerText;
     if (textValue.toUpperCase().indexOf(filter) > -1) {
       justText.childNodes[i].style.display = "";
     } else {
@@ -220,4 +244,12 @@ function printDiv() {
 
 print.addEventListener('click', () => {
   printDiv();
+})
+
+justText.addEventListener('click', e => {
+  if (e.target.classList.contains("delete")) {
+    e.target.parentElement.remove();
+    // localStorage.removeItem('quire');
+    console.log(e.target.parentElement.id)
+  }
 })
