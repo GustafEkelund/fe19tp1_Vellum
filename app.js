@@ -1,14 +1,14 @@
 let noteList = [];
-const savebtn = document.querySelector("#sideBar > i.fas.fa-plus")
+const savebtn = document.querySelector("#firstSideBar > li > i.fas.fa-plus")
 const noteContent = document.querySelector('#noteContent');
 const input = document.querySelector('#search');
 const saveToFav = document.querySelector('#saveFav');
-const favIcon = document.querySelector("#sideBar > i.far.fa-heart");
+const favIcon = document.querySelector("#firstSideBar > li > i.far.fa-heart");
 let selectedNote;
 const print = document.querySelector('#print');
 
 // Sidabar
-function openNav() {
+/* function openNav() {
   document.getElementById("secondSideBar").style.width = "300px";
   document.getElementById("editor").style.width = "70%";
   document.getElementById("editor").style.marginLeft = "420px";
@@ -17,25 +17,32 @@ function closeNav() {
   document.getElementById("secondSideBar").style.width = "0";
   document.getElementById("editor").style.width = "90%";
   document.getElementById("editor").style.marginLeft = "130px";
-}
+} */
 /* Editor */
 
-var Delta = Quill.import('delta');
-var options = {
+let toolbarOptions = [
+  [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+  ['bold'], 
+  ['italic'],
+  ['underline'],
+  ['link'],
+  ['image'],
+  [{ 'list': 'ordered' }], 
+  [{ 'list': 'bullet' }],
+  [{ 'align': [] }],
+];
+
+let Delta = Quill.import('delta');
+let options = {
   modules: {
-    toolbar: [
-      [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-      ['bold', 'italic', 'underline'],
-      ['link', 'image'],
-      [{ 'list': 'ordered' }, { 'list': 'bullet' }],
-      [{ 'align': [] }],
-    ]
+    toolbar: toolbarOptions
   },
+  scrollingContainer: '#mainEditorContainer',
   placeholder: 'Write something fun...',
   theme: 'snow'
 };
 
-var editor = new Quill('#quillEditor', options);
+let editor = new Quill('#quillEditor', options);
 
 //Save button
 savebtn.addEventListener('click', () => {
@@ -59,7 +66,7 @@ function createDiv(note) {
   newDiv.id = note.id;
   newDiv.classList.add('div');
   let newDivList = {
-    title: `<strong><span>${note.title}....</span></strong>`,
+    title: `<strong>${note.title}....</strong>`,
     date: `<span>${Date(note.id)}</span>`,
     icon: `<span class='far fa-heart ${note.favourite ? 'fas fa-heart' : ''}'></span>`
   };
@@ -140,7 +147,7 @@ function search() {
   let input = document.querySelector('#search');
   let filter = input.value.toUpperCase();
   for (let i = 0; i < noteContent.childNodes.length; i++) {
-    textValue = noteContent.childNodes[i].childNodes[2].textContent || noteContent.childNodes[i].childNodes[2].innerText;
+    textValue = noteContent.childNodes[i].childNodes[1].textContent || noteContent.childNodes[1].childNodes[2].innerText;
     if (textValue.toUpperCase().indexOf(filter) > -1) {
       noteContent.childNodes[i].style.display = "";
     } else {
