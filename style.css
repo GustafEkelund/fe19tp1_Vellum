@@ -1,29 +1,48 @@
-* {
-    font-family: 'Roboto', sans-serif;
-}  
+body {
+      background-color: #efebe9;
+      font-family: 'Roboto', sans-serif;
+}
+
+
+.navcontainer {
+    display: flex;
+}
+
+/* Pennan på sidan */
+
+.pen { 
+    float: right;
+    margin-top: 3em;
+    max-width: 25%;
+}
+
+/* Editorn */
 
 #editor{
-    max-width: 90%;
-    width: 90%;
-    position: absolute;
-    margin-left: 130px;
+    max-width: 50%;
+    width: 50%;
+    position: fixed;
     transition: 1s;
-    top: 0;
-    height: 93%;
+    min-height: 90%;
+    margin-left: 30%;
+    margin-top: 3em;
+    background-color: #fff59d;
+    box-shadow: 5px 10px 8px #888888;
   }
 
   #quillEditor { /* Inside editor */
-      padding: 20px;
+      border: none;
   }
 
   .ql-toolbar.ql-snow {
-      background-color: #fafafa;
+      border: none;
+      border-bottom: 1px solid black;
   }
 
   #print {
       position: fixed;
-      margin-top: 13px;
-      margin-left: 28%;
+      margin-top: 0.8em;
+      margin-left: 25em;
       cursor: pointer;
   }
 
@@ -31,52 +50,22 @@
       color: blue;
   }
 
-/* Knappar */
-
-.savebtn {
-    z-index: 1;
-    position: absolute;
-    top: 0;
-    margin-top: 50%;
-    margin-left: 90%;
-    font-size: 25px;
-    text-decoration: none;
-    letter-spacing: 0.15rem;
-    color: black;
-}
-
-.addToFav {
-    z-index: 1;
-    position: absolute;
-    top: 0;
-    margin-top: 50%;
-    margin-left: 85%;
-    font-size: 25px;
-    text-decoration: none;
-    letter-spacing: 0.15rem;
-    color: black;
-}
-
-.savebtn:hover, .addToFav:hover {
-    text-shadow: 4px 4px 2px grey;
-    transition: all 0.5s ease-in-out 0s;
-}
-
 /*Sidans logga*/
 
 .logo {
-    max-width: 50%;
-    max-height: 50%;
-    margin-left: 26px;
+    max-width: 5em;
+    max-height: 5em;
+    margin-left: 1em;
+    margin-right: 1em;
     cursor: pointer;
     border-bottom: 1px solid grey;
 }
 
 /* Fixed sideBar */
 
-.sideBar {
+.FirstSideBar {
     height: 100%;
-    width: 130px;
+    width: 110px;
     position: fixed;
     z-index: 1;
     top: 0;
@@ -85,43 +74,46 @@
     padding-top: 20px;
     overflow: visible;
     border-right: lightgrey solid 0.5px;
+    display: flex;
+    flex-direction: column;
 }
 
-/* Ikoner*/
-.sideBar > .fa-heart:before {
-   padding: 0px 15px 8px 16px;
-    margin: 0;
-    display: block;
-    margin-top: 50%;
-    margin-left: 34px;
+/* Ikoner på FirstSideBar*/
+
+ul {
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    margin-right: 10px;
+ }
+
+li {
+    margin-top: 15em;
     cursor: pointer;
-    border-bottom: 1px solid grey;
+    margin-right: 1em;
 } 
 
-.fa-plus:before, .fa-cog:before, .fa-folder:before{ 
-    padding: 0px 15px 8px 16px;
-    display: block;
-    margin-top: 50%;
-    margin-left: 34px;
-    cursor: pointer;
-    border-bottom: 1px solid grey;
+li:hover {
+ transition: 0.3ms;
+ margin-left: 15px;
 }
 
-.fa-plus:hover, .fa-folder:hover, .fa-cog:hover, .fa-heart:hover  {
- margin-left: 10px;
- transition: 1s;
-}
 
 /* Second Sidebar */
 
 #search {
     margin-bottom: 20px;
     text-align: center;
-    margin-left: 30%;
     padding: 10px;
     border-radius: 8px;
     border: 1px solid lightgray;
     cursor: pointer;
+    margin-left: 4em;
+    /* margin-right: 4em; */
+    display: flex;
+    flex-direction: column;
+    position: relative;
 }
 
 #search:hover {
@@ -129,70 +121,56 @@
     transition: 1s;
 }
 
-input:invalid ~ span:after {
-    content: '✖';
-    padding-left: 5px;
-    position: absolute;
-}
 
-input:valid ~ span:after {
-    content: '✓';
-    padding-left: 5px;
-    position: absolute;
-}
-
-.hight {
-    margin-top: 2%;
-}
-
-.line {
-    border-bottom: 1px solid grey;
-}
-
-.secondSideBar {
+.secondSideBarContainer {
     height: 100%;
     width: 0;
     position: fixed;
     z-index: 1;
     top: 0;
-    left: 131px;
+    left: 6.6em;
     background-color: #fafafa;
     overflow-x: hidden;
     transition: 1s;
-    border-right: lightgrey solid 0.5px;
+    display: flex;
+    flex-direction: column;
 }
 
 .div {
-   padding: 0px 34px 0px 0px;
+   padding: 10px 50px 8px 5px;
    word-break: break-all;
    transition: 0.3s;
-   border: 1px solid grey;
-   border-radius: 5px;
    width: 250px;
-   height: 100px;
-   margin: 5px;
+   height: 5em;
    cursor: pointer;
+   border-bottom: 1px solid lightgray;
+   letter-spacing: 0.8px;
+}
+
+.div > .fa-heart, .fa-trash-alt {
+    float: right;
+    margin-left: 1em;
 }
 
 .picked {
-   padding: 0px 34px 0px 5px;
+   padding: 10px 50px 8px 5px;
    word-break: break-all;
    transition: 0.3s;
-   border: 4px solid limegreen;
-   border-radius: 5px;
    width: 250px;
-   height: 100px;
-   margin: 5px;
+   height: 5em;
    cursor: pointer;
+   border-bottom: 1px solid lightgray;
+   background-color: #c8e6c9;
+   letter-spacing: 0.8px;
  }
 
-#justText div:hover {
+#noteContent div:hover {
     transition: 0.7s;
     background-color: #e0e0e0;
-    margin-left: 7px;
+    margin-left: 5px;
 }
 
-.secondSideBar a {
+.secondSideBarContainer a {
     padding: 6px 6px 8px 16px;
     text-decoration: none;
     font-size: 15px;
@@ -202,7 +180,8 @@ input:valid ~ span:after {
 }
 
 .closebtn {
-    margin-left: 250px;
+    margin-left: 17em;
+    position: static;
 }
 
 /* Popup */
@@ -229,7 +208,13 @@ input:valid ~ span:after {
     border: 1px solid #888;
     border-radius: 20px;
     width: 30%;
+    letter-spacing: 1px;
   }
+
+  .modal-content > h2 {
+      font-size: 40px;
+  }
+
   ul{
       list-style-type: none;
   }
@@ -254,10 +239,15 @@ input:valid ~ span:after {
   }
 
   .welcome {
-    text-shadow: 3px 3px 2px lightgrey;
+    text-shadow: 1px 1px 1px grey;
+    border-bottom: 1px solid lightgray;
+    margin-bottom: 2px;
+    padding-bottom: 3px;
+    color: lightgreen;
   }
 
-  .isFav {
+
+.isFav {
     background-color: red;
 }
 
@@ -268,3 +258,47 @@ input:valid ~ span:after {
 .yes {
     background-color: hotpink;
 }
+
+.picModal{
+    max-width: 70%;
+    max-height: 70%;
+    margin-left: 17%;
+    margin-top: 10px;
+}
+
+.dark-mode-editor {
+  background-color: grey;
+  color: black;
+  transition: 1s;
+}
+
+.dark-mode-sidebar {
+  background-color: grey;
+  color: black;
+  transition: 1s;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    /* border: 1px solid red; */
+    display: flex;
+    flex-direction: column;
+}
+
+li {
+    padding: 0.5em;
+    margin-top: 40%;
+    cursor: pointer;
+} 
+
+li:hover {
+ transition: 1s;
+}
+
+.mainEditorContainer {
+    display: flex;
+    flex-direction: row;
+}
+

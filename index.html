@@ -13,57 +13,59 @@
 
 <body>
 
+    <!-- Pennan på sidan. -->
+    <img class="pen" src="pics/QuillEre.png" alt="pen">
+
     <div class="maincontainer">
 
-        <section class="firstSideBar">
-            <div id="sideBar" class="sideBar">
-                <!--Sidans sidebar-->
-                <img class="logo" src="Quill2.png" alt="logga" onmouseover="openNav()">
-                <!--Logga-->
-                <i class='fas fa-plus'></i>
-                <!--Ikoner-->
-                <i class='far fa-folder' onclick="openNav()"></i>
-                <i class='far fa-heart'></i>
-                <i class='fas fa-cog'></i>
-            </div>
-        </section>
-
-        <section class="secondSideBar" id="secondSideBar">
-            <div class="hight">
-                <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
-                <form id="searchForm">
-                    <input type="search" placeholder="Search..." name="search" id="search">
+        <nav class="navContainer">
+            
+        <!--Sidans Första sidebar-->
+        <div class="firstSideBarContainer">
+            <aside id="FirstSideBar" class="FirstSideBar"> 
+                <ul>
+                <img class="logo" src="pics/qurie5.png" alt="logga">
+                <li class='fas fa-plus'></li>
+                <li class='far fa-folder'></li>
+                <li class='far fa-heart'></li>
+                <li class='fas fa-moon'></li>
+                </ul>
+            </aside>
+        </div>
+        
+        <!--Sidans Andra sidebar-->
+        <div class="secondSideBarContainer" id="secondSideBarContainer">
+            <aside class="secondSideBar" id="secondSideBar">
+                <a href="javascript:void(0)" class="closebtn">×</a>
+                <form id="searchForm"></form>
+                <input type="search" autocomplete="off" placeholder="Search..." name="search" id="search">
                 </form>
-                <a class="line" href="#"></a>
-                <div id="justText"></div>
-            </div>
-        </section>
+                <div id="noteContent"></div>
+            </aside>
+        </div>
+        </nav>
 
-        <main></main>
+        <main class="mainEditorContainer" id="mainEditorContainer">
         <div id="editor">
             <i id="print" class="fa fa-print"></i>
             <p id="quillEditor"></p>
         </div>
-
         </main>
+
     </div>
 
-    <!--Popup-->
-    <div id="myModal" class="modal">
-
-        <!-- Modal content -->
+    <!--Popup-->    
+    <div id="myModal" class="modal"> 
         <div class="modal-content">
             <span class="close">&times;</span>
             <h2 class="welcome">Welcome to Quire</h2>
+            <img class="picModal" src="pics/QuillGuy2.png" alt="quill">
             <p>This is easy to use text editor in the browser.
-                <ul>
-                    <li>Save your documents</li><br>
-                    <li>Pick favorites</li> <br>
-                    <li>Find your documents via the search function.</li>
-                </ul>
+                    <p>Save your documents</p>
+                    <p>Pick favorites</p>
+                    <p>Find your documents via the search function.</p>
             </p>
         </div>
-
     </div>
 
     <script src="app.js"></script>
