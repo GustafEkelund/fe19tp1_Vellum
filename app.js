@@ -4,11 +4,12 @@ const noteContent = document.querySelector('#noteContent');
 const input = document.querySelector('#search');
 const saveToFav = document.querySelector('#saveFav');
 const favIcon = document.querySelector(".fa-heart");
-const print = document.querySelector('#print');
+const print = document.querySelector("#print")
 const openSideBar = document.querySelector('.fa-folder');
 const openSideBarLogo = document.querySelector('.logo');
 const closeBtn = document.querySelector('.closebtn');
 const darkMode = document.querySelector('.fa-moon');
+const changeEditor = document.querySelector('#editor');
 let selectedNote;
 
 // Sidabar
@@ -19,24 +20,31 @@ function closeNav() {
   document.getElementById("secondSideBarContainer").style.width = "0";
 }
 
+
 openSideBar.addEventListener('click', () => {
-  openNav();
+  clicks += 1
+  if (clicks % 2 === 0) {
+    openNav();
+  } else {
+    closeNav();
+  }
+
 })
 
 openSideBarLogo.addEventListener('click', () => {
-  openNav();
+  clicks += 1
+  if (clicks % 2 === 0) {
+    openNav();
+  } else {
+    closeNav();
+  }
 })
 
 closeBtn.addEventListener('click', () => {
   closeNav();
 })
 
-darkMode.addEventListener('click', () => {
-  var element = document.body;
-  var sideBarBlackMode = document.querySelector('.secondSideBar');
-  element.classList.toggle("dark-mode-editor");
-  sideBarBlackMode.classList.toggle("dark-mode-sidebar");
-})
+
 
 
 /* Editor */
@@ -44,17 +52,29 @@ darkMode.addEventListener('click', () => {
 var Delta = Quill.import('delta');
 var options = {
   modules: {
-    toolbar: [
-      [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-      ['bold', 'italic', 'underline'],
-      ['link', 'image'],
-      [{ 'list': 'ordered' }, { 'list': 'bullet' }],
-      [{ 'align': [] }],
-    ]
+    toolbar:
+      [
+        [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+        ['bold'],
+        ['italic'],
+        ['underline'],
+        ['link'],
+        ['image'],
+        [{ 'list': 'ordered' }],
+        [{ 'list': 'bullet' }],
+        [{ 'align': [] }],
+      ]
+    // ['print'],
+
+
   },
   placeholder: 'Write something fun...',
   theme: 'snow'
 };
+
+var icons = Quill.import('ui/icons');
+
+
 
 var editor = new Quill('#quillEditor', options);
 
@@ -116,11 +136,12 @@ function createDiv(note) {
     newDiv.classList.add("picked")
   }
   let newDivList = {
-    title: `<strong>${note.title}....</strong>`,
+    title: `<strong>${note.title}</strong>`,
     date: `<span>${Date(note.id)}</span>`,
-    icon: `<span class='far fa-heart ${note.favourite ? 'fas fa-heart' : ''}'></span>`
+    icon: `<span class='far fa-heart ${note.favourite ? 'fas fa-heart' : ''}'></span>`,
+    trash: `<span class='far fa-trash-alt delete'></span>`
   };
-  newDiv.innerHTML = ` ${newDivList.title} <br> ${newDivList.date} ${newDivList.icon}`;
+  newDiv.innerHTML = ` ${newDivList.title} ${newDivList.trash} ${newDivList.icon} <br> ${newDivList.date};`
   noteContent.appendChild(newDiv)
 }
 
@@ -134,11 +155,12 @@ function updateDiv(note) {
     newDiv.classList.add('picked')
   }
   let newDivList = {
-    title: `<strong>${note.title}....</strong>`,
+    title: `<strong>${note.title}</strong>`,
     date: `<span>${Date(note.id)}</span>`,
-    icon: `<span class='far fa-heart ${note.favourite ? 'fas fa-heart' : ''}'></span>`
+    icon: `<span class='far fa-heart ${note.favourite ? 'fas fa-heart' : ''}'></span>`,
+    trash: `<span class='far fa-trash-alt delete'></span>`
   };
-  newDiv.innerHTML = ` ${newDivList.title} <br> ${newDivList.date} ${newDivList.icon}`;
+  newDiv.innerHTML = ` ${newDivList.title} ${newDivList.trash} ${newDivList.icon} <br> ${newDivList.date};`
   noteContent.replaceChild(newDiv, oldDiv)
 }
 
@@ -310,3 +332,5 @@ noteContent.addEventListener('click', e => {
     saveNotes()
   }
 })
+
+

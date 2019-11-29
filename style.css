@@ -1,22 +1,29 @@
 body {
-      background-color: #efebe9;
+      background-color: #e8f5e9;
       font-family: 'Roboto', sans-serif;
 }
-
 
 .navcontainer {
     display: flex;
 }
 
-/* Pennan på sidan */
-
-.pen { 
-    float: right;
-    margin-top: 3em;
-    max-width: 25%;
-}
-
 /* Editorn */
+
+.ql-editor {
+    box-sizing: border-box;
+    cursor: text;
+    line-height: 1.42;
+    height: 100%;
+    overflow-y: auto;
+    tab-size: 4;
+    text-align: left;
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
+    outline: none;
+    padding: 12px 15px;
+    width: 100%;
+    height: 55em;
+}
 
 #editor{
     max-width: 50%;
@@ -24,30 +31,26 @@ body {
     position: fixed;
     transition: 1s;
     min-height: 90%;
-    margin-left: 30%;
-    margin-top: 3em;
+    left: 30em;
+    overflow-y: auto;
+    margin-top: 2%;
     background-color: #fff59d;
     box-shadow: 5px 10px 8px #888888;
   }
 
   #quillEditor { /* Inside editor */
       border: none;
+      height: auto;
   }
 
   .ql-toolbar.ql-snow {
       border: none;
-      border-bottom: 1px solid black;
-  }
-
-  #print {
+      display: flex;
+      flex-direction: column;
       position: fixed;
-      margin-top: 0.8em;
-      margin-left: 25em;
-      cursor: pointer;
-  }
-
-  #print:hover {
-      color: blue;
+      right: 7em;
+      top: 2em;
+      overflow: auto;
   }
 
 /*Sidans logga*/
@@ -61,6 +64,12 @@ body {
     border-bottom: 1px solid grey;
 }
 
+.mainEditorContainer {
+    height: auto;
+    width: 70%;
+    overflow-y: auto;
+}
+
 /* Fixed sideBar */
 
 .FirstSideBar {
@@ -70,22 +79,21 @@ body {
     z-index: 1;
     top: 0;
     left: 0;
-    background-color: #c8e6c9;
+    background-color: #81c784;
     padding-top: 20px;
     overflow: visible;
     border-right: lightgrey solid 0.5px;
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
 }
 
 /* Ikoner på FirstSideBar*/
 
-ul {
+.FirstSideBar > ul {
     list-style-type: none;
     padding: 0;
     display: flex;
-    flex-direction: column;
-    margin-right: 10px;
  }
 
 li {
@@ -96,44 +104,60 @@ li {
 
 li:hover {
  transition: 0.3ms;
- margin-left: 15px;
-}
+ text-shadow: 5px 10px 8px #888888;
+ }
 
 
 /* Second Sidebar */
+
 
 #search {
     margin-bottom: 20px;
     text-align: center;
     padding: 10px;
+    width: 100%;
     border-radius: 8px;
-    border: 1px solid lightgray;
+    border: hidden;
     cursor: pointer;
-    margin-left: 4em;
-    /* margin-right: 4em; */
     display: flex;
     flex-direction: column;
     position: relative;
+    outline: none;
+    background: #c8e6c9;
 }
+
+#print {
+    position: fixed;
+    right: 13.2em;
+    top: 16em;
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+  }
+
+  #print:hover {
+      color: blue;
+  }
+
 
 #search:hover {
     box-shadow: 5px 10px 8px #888888;
     transition: 1s;
 }
 
-
-.secondSideBarContainer {
+#secondSideBarContainer {
     height: 100%;
     width: 0;
     position: fixed;
     z-index: 1;
     top: 0;
     left: 6.6em;
-    background-color: #fafafa;
+    background-color: #c8e6c9;
     overflow-x: hidden;
     transition: 1s;
     display: flex;
     flex-direction: column;
+    width: 300px;
 }
 
 .div {
@@ -166,11 +190,11 @@ li:hover {
 
 #noteContent div:hover {
     transition: 0.7s;
-    background-color: #e0e0e0;
+    background-color: #c8e6c9;
     margin-left: 5px;
 }
 
-.secondSideBarContainer a {
+#secondSideBarContainer a {
     padding: 6px 6px 8px 16px;
     text-decoration: none;
     font-size: 15px;
@@ -266,17 +290,6 @@ li:hover {
     margin-top: 10px;
 }
 
-.dark-mode-editor {
-  background-color: grey;
-  color: black;
-  transition: 1s;
-}
-
-.dark-mode-sidebar {
-  background-color: grey;
-  color: black;
-  transition: 1s;
-}
 
 ul {
     list-style-type: none;
@@ -291,6 +304,7 @@ li {
     padding: 0.5em;
     margin-top: 40%;
     cursor: pointer;
+    margin-bottom: 15px;
 } 
 
 li:hover {
@@ -302,3 +316,119 @@ li:hover {
     flex-direction: row;
 }
 
+
+@media only screen and (max-width: 768px) {
+  body {
+    background-color: #FAFAFA;
+  }
+  .FirstSideBar{
+      float: none;
+      width: 100%;
+      height: 7%;
+      display: flex;
+      align-items: flex-end;
+      flex-direction: row;
+      justify-content: space-between;
+      top: 91%;
+  }
+  #editor{
+    display: flex;
+    max-width: 100%;
+    width: 100%;
+    height: 100%;
+    margin: 0 auto;
+    padding: 0;
+    margin-left: 0;
+    word-break: break-all;
+    flex-direction: column;
+    top: 0;
+    left: 0;
+    background-color: white;
+  }
+  ul{
+      display: flex;
+      position: absolute;
+      flex-direction: row;
+      align-items: center;
+  }
+  .logo{
+    display: none;
+  }
+  .ql-toolbar.ql-snow {
+    float: none;
+    display: flex;
+    align-items: flex-end;
+    flex-direction: column;
+    justify-content: space-between;
+    top: 0;
+    right: 0;
+    position: absolute;
+    z-index: 1;
+    right: 0;
+    width: 30%;
+  }
+  #quillEditor { /* Inside editor */
+      height: 86%;
+      width: 100%;
+      display: flex;
+      z-index: -1;
+      top: 0;
+  }
+  li{
+      font-size: 20px;
+      display: flex;
+      letter-spacing: 30%;
+      margin-left: 32%;
+      position: relative;
+  }
+
+   .modal-content > h2 {
+      font-size: 20px;
+  }
+
+  #print {
+    position: absolute;
+    right: 1.8em;
+    top: 14.5em;
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+  }
+
+  #secondSideBarContainer {
+    float: none;
+    width: 100%;
+    height: 91%;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    left: 0;
+    position: fixed;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    flex-direction: column;
+    justify-content: space-between;
+    top: 10;
+    width: 0;
+  }
+  .pen{
+      display: none;
+  }
+  .closebtn{
+      display: none;
+  }
+
+  ql-container {
+    box-sizing: border-box;
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 13px;
+    height: 100%;
+    position: relative;
+}
+
+.ql-editor {
+    width: 100%;
+    padding-right: 30%;
+}
+
+}
