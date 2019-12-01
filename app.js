@@ -121,7 +121,11 @@ editor.on('text-change', function (delta) {
 //Save button
 savebtn.addEventListener('click', () => {
   Array.from(noteContent.childNodes).map(div => { div.classList.remove('picked') })
-  selectedNote = !selectedNote;
+  if (selectedNote) {
+    selectedNote = !selectedNote;
+  } else {
+    console.log('yes')
+  }
   clearEditor();
 
 
@@ -202,9 +206,9 @@ function saveNotes() {
 //Renderar dokumentet samt div när sidan laddas om
 function renderDocs() {
   noteList.forEach(note => {
-    if (note.deleted === false) {
-      createDiv(note)
-    }
+    /* if (note.deleted === false) { */
+    createDiv(note)
+    /*  } */
   })
 }
 
