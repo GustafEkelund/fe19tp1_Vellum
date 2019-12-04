@@ -19,34 +19,29 @@
     <div class="maincontainer">
 
         <nav class="navContainer">
-
             <!--Sidans Första sidebar-->
             <div class="firstSideBarContainer">
-                <aside id="FirstSideBar" class="FirstSideBar">
-                    <ul>
-                        <img class="logo" src="pics/quillFinal.png" alt="logga">
-                        <li class='fas fa-plus'></li>
-                        <!-- onclick="changeColor()" -->
-                        <li class='far fa-folder'></li>
-                        <li class='far fa-heart'></li>
-                    </ul>
-                </aside>
+                <ul id="FirstSideBar" class="FirstSideBar">
+                    <img class="logo" src="/pics/quillFinal.png" alt="logga">
+                    <li class='fas fa-plus'></li>
+                    <!-- onclick="changeColor()" -->
+                    <li class='far fa-folder'></li>
+                    <li class='far fa-heart'></li>
+                </ul>
             </div>
 
             <!--Sidans Andra sidebar-->
-            <div id="secondSideBarContainer">
-                <aside class="secondSideBar" id="secondSideBar">
-                    <a href="javascript:void(0)" class="closebtn">×</a>
+            <div class="secondSideBarContainer">
+                <div class="secondSideBar" id="secondSideBar">
+                    <!-- <a href="javascript:void(0)" class="closebtn">×</a> -->
                     <form id="searchForm"></form>
 
                     <input type="search" autocomplete="off" placeholder="Search..." name="search" id="search">
                     </form>
 
                     <div id="noteContent"></div>
-                </aside>
-
+                </div>
             </div>
-
         </nav>
 
         <main class="mainEditorContainer" id="mainEditorContainer">

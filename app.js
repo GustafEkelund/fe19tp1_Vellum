@@ -13,40 +13,19 @@ const changeEditor = document.querySelector('#editor');
 let selectedNote;
 let clicks = 1;
 
-
-// Sidabar
-function openNav() {
-  document.getElementById("secondSideBarContainer").style.width = "300px";
-}
-function closeNav() {
-  document.getElementById("secondSideBarContainer").style.width = "0";
-}
-
-
-openSideBar.addEventListener('click', () => {
-  clicks += 1
-  if (clicks % 2 === 0) {
-    openNav();
-  } else {
-    closeNav();
-  }
-
-})
-
-openSideBarLogo.addEventListener('click', () => {
-  clicks += 1
-  if (clicks % 2 === 0) {
-    openNav();
-  } else {
-    closeNav();
-  }
-})
-
-closeBtn.addEventListener('click', () => {
-  closeNav();
-})
+/* Sidebar toggle */
+const SecondSideBarToggle = () => {
+  const secondSideBarContainer = document.querySelector('.secondSideBarContainer');
+  // Toggle Nav
+  openSideBar.addEventListener('click', () => {
+    secondSideBarContainer.classList.toggle('secondSideBarContainer-active');
+  });
+}; SecondSideBarToggle();
 
 
+/* closeBtn.addEventListener('click', () => {
+  
+}) */
 
 
 /* Editor */
