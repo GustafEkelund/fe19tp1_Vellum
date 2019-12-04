@@ -11,40 +11,21 @@ const closeBtn = document.querySelector('.closebtn');
 const darkMode = document.querySelector('.fa-moon');
 const changeEditor = document.querySelector('#editor');
 let selectedNote;
+let clicks = 1;
 
-// Sidabar
-function openNav() {
-  document.getElementById("secondSideBarContainer").style.width = "300px";
-}
-function closeNav() {
-  document.getElementById("secondSideBarContainer").style.width = "0";
-}
+/* Sidebar toggle */
+const SecondSideBarToggle = () => {
+  const secondSideBarContainer = document.querySelector('.secondSideBarContainer');
+  // Toggle Nav
+  openSideBar.addEventListener('click', () => {
+    secondSideBarContainer.classList.toggle('secondSideBarContainer-active');
+  });
+}; SecondSideBarToggle();
+  
 
-
-openSideBar.addEventListener('click', () => {
-  clicks += 1
-  if (clicks % 2 === 0) {
-    openNav();
-  } else {
-    closeNav();
-  }
-
-})
-
-openSideBarLogo.addEventListener('click', () => {
-  clicks += 1
-  if (clicks % 2 === 0) {
-    openNav();
-  } else {
-    closeNav();
-  }
-})
-
-closeBtn.addEventListener('click', () => {
-  closeNav();
-})
-
-
+/* closeBtn.addEventListener('click', () => {
+  
+}) */
 
 
 /* Editor */
@@ -64,31 +45,15 @@ var options = {
         [{ 'list': 'bullet' }],
         [{ 'align': [] }],
       ]
-    // ['print'],
-
-
   },
   placeholder: 'Write something fun...',
+  scrollingContainer: '#mainEditorContainer',
   theme: 'snow'
 };
 
 var icons = Quill.import('ui/icons');
 
-
-
 var editor = new Quill('#quillEditor', options);
-
-function saveDocs() {
-  return {
-    id: Date.now(),
-    favourite: false,
-    contents: "notes",
-    title: "title"
-  };
-
-}
-
-saveDocs();
 
 editor.on('text-change', function (delta) {
   if (!selectedNote) {
@@ -97,7 +62,6 @@ editor.on('text-change', function (delta) {
 
   let contents = editor.getContents();
   let save = JSON.stringify(contents, null, 2);
-  let noteID = selectedNote.id;
 
   if (delta) {
     save = JSON.stringify(delta, null, 2) + "\n\n" + save;
@@ -109,36 +73,92 @@ editor.on('text-change', function (delta) {
       createDiv(selectedNote);
       saveNotes()
     } else {
-      selectedNote.contents = contents; selectedNote.title = editor.getText(0, 10);
-
-      saveNotes();
-      updateDiv(selectedNote);
+      if (selectedNote.deleted === false) {
+        selectedNote.contents = contents;
+        selectedNote.title = editor.getText(0, 10);
+        saveNotes();
+        updateDiv(selectedNote);
+      }
     }
-
   }
 });
+
+//Click event för divarna
+noteContent.addEventListener('click', e => {
+  let noteID = e.target.closest("div").id;
+  selectedNote = noteList.find(note => note.id === Number(noteID));
+
+  if (e.target.classList.contains("delete")) { del(e) }
+
+
+  if (e.target.classList.contains('far')) { selectFavo(e) }
+  else { pickDoc(e) } //clicked div
+})
+
+
+input.addEventListener('keyup', e => {
+  search();
+  input.addEventListener('click', e => {
+    noteContent.childNodes.forEach(e => { e.style.display = "block" })
+  })
+})
+
+
+favIcon.addEventListener('click', e => {
+  let arrayOfDivs = Array.from(noteContent.childNodes);
+
+  clicks += 1;
+
+  arrayOfDivs.forEach(div => {
+    let noteID = div.id;
+    selectedNote = noteList.find(note => note.id === Number(noteID));
+    if (clicks % 2 === 0) {
+      if (selectedNote.favourite) {
+        div.style.display = "block";
+      } else { div.style.display = "none" }
+    } else { div.style.display = "block" }
+
+  })
+})
 
 //Save button
 savebtn.addEventListener('click', () => {
   Array.from(noteContent.childNodes).map(div => { div.classList.remove('picked') })
   if (selectedNote) {
     selectedNote = !selectedNote;
-  } else {
-    console.log('yes')
   }
   clearEditor();
-
-
 });
 
-function createDiv(note) {
+//Auto saving
+function saveDocs() {
+  return {
+    id: Date.now(),
+    favourite: false,
+    contents: "notes",
+    title: "title",
+    deleted: false
+  };
+} saveDocs();
 
+function del(e) {
+  selectedNote.deleted = true;
+  e.target.closest('div').remove();
+  saveNotes();
+  clearEditor();
+
+}
+
+
+// Creats a new div containing info about Docs
+function createDiv(note) {
   let newDiv = document.createElement("div");
   newDiv.id = note.id;
   newDiv.classList.add('div');
   if (selectedNote && selectedNote.id == note.id) {
     newDiv.classList.add("picked")
   }
+
   let newDivList = {
     title: `<strong>${note.title}</strong>`,
     date: `<span>${Date(note.id)}</span>`,
@@ -146,7 +166,7 @@ function createDiv(note) {
     trash: `<span class='far fa-trash-alt delete'></span>`
   };
   newDiv.innerHTML = ` ${newDivList.title} ${newDivList.trash} ${newDivList.icon} <br> ${newDivList.date};`
-  noteContent.appendChild(newDiv)
+  noteContent.appendChild(newDiv);
 }
 
 function updateDiv(note) {
@@ -206,37 +226,26 @@ function saveNotes() {
 //Renderar dokumentet samt div när sidan laddas om
 function renderDocs() {
   noteList.forEach(note => {
-    /* if (note.deleted === false) { */
-    createDiv(note)
-    /*  } */
+    if (note.deleted === false) {
+      createDiv(note)
+    }
   })
 }
 
-//Click event för divarna
-noteContent.addEventListener('click', e => {
-  const newDiv = document.querySelectorAll('#noteContent > div');
+function pickDoc(e) {
   const loadData = JSON.parse(localStorage.getItem('quire')).notes;
-  let noteID = e.target.closest("div").id;
-  selectedNote = noteList.find(note => note.id === Number(noteID));
-
-  if (e.target.classList.contains('far')) {
-    selectedNote.favourite = !selectedNote.favourite
-    saveNotes();
-    e.target.classList.toggle('fas');
-
-  } else { // Clicked a note to load
-    for (let i = 0; i < loadData.length; i++) {
-      if (loadData[i].id == e.target.closest('div').id) {
-        editor.setContents(loadData[i].contents);
-        newDiv.forEach(event => {
-          if (e.target.closest('div') == event) {
-            event.classList.add('picked');
-          } else { event.classList.remove('picked'); }
-        })
-      }
+  const newDiv = document.querySelectorAll('#noteContent > div');
+  for (let i = 0; i < loadData.length; i++) {
+    if (loadData[i].id == e.target.closest('div').id) {
+      editor.setContents(loadData[i].contents);
+      newDiv.forEach(event => {
+        if (e.target.closest('div') == event) {
+          event.classList.add('picked');
+        } else { event.classList.remove('picked'); }
+      })
     }
   }
-})
+}
 
 function search() {
   let input = document.querySelector('#search');
@@ -251,12 +260,35 @@ function search() {
   }
 }
 
-input.addEventListener('keyup', e => {
-  search();
-  input.addEventListener('click', e => {
-    noteContent.childNodes.forEach(e => { e.style.display = "block" })
+function selectFavo(e) {
+  selectedNote.favourite = !selectedNote.favourite
+  saveNotes();
+  e.target.classList.toggle('fas');
+}
+
+function displayChecked() {
+  let checkboxes = document.querySelectorAll('.fav > #noteContent > div > input');
+  let arrayOfCheckboxes = Array.from(checkboxes);
+  arrayOfCheckboxes.map(e => {
+    if (e.checked) { e.parentElement.style.display = 'block' }
+    else { e.parentElement.style.display = 'none' }
   })
-})
+}
+
+function printDiv() {
+  var divContents = document.querySelector(".ql-editor").innerHTML;
+  var a = window.open('', '', 'height=1200, width=1200');
+  a.document.write('<html>');
+  a.document.write('<body > ');
+  a.document.write(divContents);
+  a.document.write('</body></html>');
+  a.document.close();
+  a.print();
+}
+
+
+
+
 
 /* Popup */
 
@@ -282,59 +314,16 @@ window.onclick = function (event) {
   }
 }
 
-function displayChecked() {
-  let checkboxes = document.querySelectorAll('.fav > #noteContent > div > input');
-  let arrayOfCheckboxes = Array.from(checkboxes);
-  arrayOfCheckboxes.map(e => {
-    if (e.checked) { e.parentElement.style.display = 'block' }
-    else { e.parentElement.style.display = 'none' }
-  })
-}
 
-let clicks = 1;
-favIcon.addEventListener('click', e => {
-  let arrayOfDivs = Array.from(noteContent.childNodes);
 
-  clicks += 1;
 
-  arrayOfDivs.forEach(div => {
-    let noteID = div.id;
-    selectedNote = noteList.find(note => note.id === Number(noteID));
-    if (clicks % 2 === 0) {
-      if (selectedNote.favourite) {
-        div.style.display = "block";
-      } else { div.style.display = "none" }
-    } else { div.style.display = "block" }
 
-  })
-})
-
-function printDiv() {
-  var divContents = document.querySelector(".ql-editor").innerHTML;
-  var a = window.open('', '', 'height=1200, width=1200');
-  a.document.write('<html>');
-  a.document.write('<body > ');
-  a.document.write(divContents);
-  a.document.write('</body></html>');
-  a.document.close();
-  a.print();
-}
 
 print.addEventListener('click', () => {
   printDiv();
 })
 
-noteContent.addEventListener('click', e => {
-  console.log(noteList)
-  let selectedNote = noteList.find(note => note.id == e.target.closest("div").id);
-  if (e.target.classList.contains("delete")) {
-    selectedNote.deleted = true;
-    e.target.parentElement.remove();
-    localStorage.removeItem('quire');
-    console.log(e.target.parentElement.id)
-    clearEditor()
-    saveNotes()
-  }
-})
+
+
 
 

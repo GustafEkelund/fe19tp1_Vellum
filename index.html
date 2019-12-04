@@ -18,61 +18,56 @@
 
     <div class="maincontainer">
 
-    <nav class="navContainer">
+        <nav class="navContainer">
+            <!--Sidans Första sidebar-->
+            <div class="firstSideBarContainer">
+                <ul id="FirstSideBar" class="FirstSideBar">
+                    <img class="logo" src="/pics/quillFinal.png" alt="logga">
+                    <li class='fas fa-plus'></li>
+                    <!-- onclick="changeColor()" -->
+                    <li class='far fa-folder'></li>
+                    <li class='far fa-heart'></li>
+                </ul>
+            </div>
 
-    <!--Sidans Första sidebar-->
-    <div class="firstSideBarContainer">
-    <aside id="FirstSideBar" class="FirstSideBar">
-        <ul>
-            <img class="logo" src="pics/quillFinal.png" alt="logga">
-            <li class='fas fa-plus'></li>
-            <!-- onclick="changeColor()" -->
-            <li class='far fa-folder'></li>
-            <li class='far fa-heart'></li>
-        </ul>
-    </aside>
-    </div>
+            <!--Sidans Andra sidebar-->
+            <div class="secondSideBarContainer">
+                <div class="secondSideBar" id="secondSideBar">
+                    <!-- <a href="javascript:void(0)" class="closebtn">×</a> -->
+                    <form id="searchForm"></form>
 
-    <!--Sidans Andra sidebar-->
-    <div id="secondSideBarContainer">
-    <aside class="secondSideBar" id="secondSideBar">
-        <a href="javascript:void(0)" class="closebtn">×</a>
-        <form id="searchForm"></form>
+                    <input type="search" autocomplete="off" placeholder="Search..." name="search" id="search">
+                    </form>
 
-        <input type="search" autocomplete="off" placeholder="Search..." name="search" id="search">
-        </form>
+                    <div id="noteContent"></div>
+                </div>
+            </div>
+        </nav>
 
-        <div id="noteContent"></div>
-    </aside>
-
-    </div>
-
-    </nav>
-
-    <main class="mainEditorContainer" id="mainEditorContainer">
-    <div id="editor">
-    <div id="print" class="fa fa-print"></div>
-    <p id="quillEditor"></p>
-    </div>
+        <main class="mainEditorContainer" id="mainEditorContainer">
+            <div id="editor">
+                <div id="print" class="fa fa-print"></div>
+                <p id="quillEditor"></p>
+            </div>
 
 
     </div>
 
     <!--Popup-->
     <div id="myModal" class="modal">
-    <div class="modal-content">
-    <span class="close">&times;</span>
-    <h2 class="welcome">Welcome to Quire</h2>
-    <img class="picModal" src="pics/QuillGuy2.png" alt="quill">
-    <p>This is easy to use text editor in the browser.
-    <p>Save your documents</p>
-    <p>Pick favorites</p>
-    <p>Find your documents via the search function.</p>
-    </p>
-    </div>
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 class="welcome">Welcome to Quire</h2>
+            <img class="picModal" src="pics/QuillGuy2.png" alt="quill">
+            <p>This is easy to use text editor in the browser.
+                <p>Save your documents</p>
+                <p>Pick favorites</p>
+                <p>Find your documents via the search function.</p>
+            </p>
+        </div>
     </div>
 
     <script src="app.js"></script>
-    </body>
+</body>
 
 </html>
