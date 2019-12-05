@@ -1,7 +1,7 @@
 let noteList = [];
 const newDoc = document.querySelector(".fa-plus");
 const noteContent = document.querySelector('#noteContent');
-const input = document.querySelector('#search');
+const input = document.querySelector('.search');
 const saveToFav = document.querySelector('#saveFav');
 const favIcon = document.querySelector(".fa-heart");
 const print = document.querySelector("#print")
@@ -289,6 +289,9 @@ function myFunction() {
   var element = document.body;
   var secondSideBar = document.querySelector('.secondSideBar');
   var secondSideBarContainer = document.querySelector('.secondSideBarContainer');
+  var darkEditor = document.querySelector(".ql-editor");
+
+  darkEditor.classList.toggle("dark-mode-editor");
   element.classList.toggle("dark-mode");
   secondSideBar.classList.toggle("dark-mode-secondSidebar");
   secondSideBarContainer.classList.toggle("dark-mode-secondSidebar");
