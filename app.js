@@ -1,5 +1,5 @@
 let noteList = [];
-const savebtn = document.querySelector(".fa-plus");
+const newDoc = document.querySelector(".fa-plus");
 const noteContent = document.querySelector('#noteContent');
 const input = document.querySelector('#search');
 const saveToFav = document.querySelector('#saveFav');
@@ -21,7 +21,7 @@ const SecondSideBarToggle = () => {
     secondSideBarContainer.classList.toggle('secondSideBarContainer-active');
   });
 }; SecondSideBarToggle();
-  
+
 
 /* closeBtn.addEventListener('click', () => {
   
@@ -57,7 +57,7 @@ var editor = new Quill('#quillEditor', options);
 
 editor.on('text-change', function (delta) {
   if (!selectedNote) {
-    selectedNote = saveDocs();
+    selectedNote = newNote();
   }
 
   let contents = editor.getContents();
@@ -95,7 +95,7 @@ noteContent.addEventListener('click', e => {
   else { pickDoc(e) } //clicked div
 })
 
-
+//Keyup event för search
 input.addEventListener('keyup', e => {
   search();
   input.addEventListener('click', e => {
@@ -103,7 +103,7 @@ input.addEventListener('keyup', e => {
   })
 })
 
-
+//Favoritikonens toggle effekt 
 favIcon.addEventListener('click', e => {
   let arrayOfDivs = Array.from(noteContent.childNodes);
 
@@ -121,8 +121,8 @@ favIcon.addEventListener('click', e => {
   })
 })
 
-//Save button
-savebtn.addEventListener('click', () => {
+//nytt dokumentknapp (+)
+newDoc.addEventListener('click', () => {
   Array.from(noteContent.childNodes).map(div => { div.classList.remove('picked') })
   if (selectedNote) {
     selectedNote = !selectedNote;
@@ -130,8 +130,8 @@ savebtn.addEventListener('click', () => {
   clearEditor();
 });
 
-//Auto saving
-function saveDocs() {
+//skapar en ny note med "keys" som innehåller id, editor content mm. 
+function newNote() {
   return {
     id: Date.now(),
     favourite: false,
@@ -139,18 +139,20 @@ function saveDocs() {
     title: "title",
     deleted: false
   };
-} saveDocs();
+}
 
+
+// Tar bort noten   
 function del(e) {
   selectedNote.deleted = true;
   e.target.closest('div').remove();
   saveNotes();
   clearEditor();
-
+  selectedNote = !selectedNote
 }
 
 
-// Creats a new div containing info about Docs
+// skapar en div i second sidebar med info om noten
 function createDiv(note) {
   let newDiv = document.createElement("div");
   newDiv.id = note.id;
@@ -169,13 +171,14 @@ function createDiv(note) {
   noteContent.appendChild(newDiv);
 }
 
+//updaterar en div. tarbort gamla oh byter ut den till en ny.
 function updateDiv(note) {
 
   let oldDiv = document.getElementById(note.id);
   let newDiv = document.createElement("div");
   newDiv.id = note.id;
   newDiv.classList.add('div');
-  if (Array.from(noteContent.childNodes).find(note => note.id == selectedNote.id)) {
+  if (selectedNote && selectedNote.id == note.id) {
     newDiv.classList.add('picked')
   }
   let newDivList = {
@@ -186,6 +189,7 @@ function updateDiv(note) {
   };
   newDiv.innerHTML = ` ${newDivList.title} ${newDivList.trash} ${newDivList.icon} <br> ${newDivList.date};`
   noteContent.replaceChild(newDiv, oldDiv)
+
 }
 
 // Load localstorage när sidan laddar
@@ -232,6 +236,7 @@ function renderDocs() {
   })
 }
 
+//laddar data från localstorage och läggertillbaka data i editorn när en av note-divarna klickas. Sätter en ny class på noten som klickats. 
 function pickDoc(e) {
   const loadData = JSON.parse(localStorage.getItem('quire')).notes;
   const newDiv = document.querySelectorAll('#noteContent > div');
@@ -246,7 +251,7 @@ function pickDoc(e) {
     }
   }
 }
-
+//Söker igenom divarna i second sidebar. Söker inbart i rubrikerna.
 function search() {
   let input = document.querySelector('#search');
   let filter = input.value.toUpperCase();
@@ -260,21 +265,15 @@ function search() {
   }
 }
 
+//Sätt en note till favorit eller ta bort som favorit.
 function selectFavo(e) {
   selectedNote.favourite = !selectedNote.favourite
   saveNotes();
   e.target.classList.toggle('fas');
 }
 
-function displayChecked() {
-  let checkboxes = document.querySelectorAll('.fav > #noteContent > div > input');
-  let arrayOfCheckboxes = Array.from(checkboxes);
-  arrayOfCheckboxes.map(e => {
-    if (e.checked) { e.parentElement.style.display = 'block' }
-    else { e.parentElement.style.display = 'none' }
-  })
-}
 
+//Print-funktion 
 function printDiv() {
   var divContents = document.querySelector(".ql-editor").innerHTML;
   var a = window.open('', '', 'height=1200, width=1200');
@@ -286,6 +285,16 @@ function printDiv() {
   a.print();
 }
 
+function myFunction() {
+  var element = document.body;
+  var secondSideBar = document.querySelector('.secondSideBar');
+  var secondSideBarContainer = document.querySelector('.secondSideBarContainer');
+  element.classList.toggle("dark-mode");
+  secondSideBar.classList.toggle("dark-mode-secondSidebar");
+  secondSideBarContainer.classList.toggle("dark-mode-secondSidebar");
+  input.classList.toggle("dark-mode-secondSidebar");
+  noteContent.classList.toggle("dark-mode-secondSidebar");
+}
 
 
 
