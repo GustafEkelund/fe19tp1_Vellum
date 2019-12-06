@@ -13,6 +13,7 @@ const changeEditor = document.querySelector('#editor');
 let selectedNote;
 let clicks = 1;
 
+
 /* Sidebar toggle */
 const SecondSideBarToggle = () => {
   const secondSideBarContainer = document.querySelector('.secondSideBarContainer');
@@ -21,11 +22,6 @@ const SecondSideBarToggle = () => {
     secondSideBarContainer.classList.toggle('secondSideBarContainer-active');
   });
 }; SecondSideBarToggle();
-
-
-/* closeBtn.addEventListener('click', () => {
-  
-}) */
 
 
 /* Editor */
