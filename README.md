@@ -44,3 +44,5 @@ Everything in the media query block decides the design for mobile view.
 - Gustaf Ekelund
 - Phani Kumar Kotikalapudi
 - Ishrath Ansurudeen
+
+Link to Trello-board https://trello.com/b/djVyt5ve/team-vellum
