@@ -1,270 +1,556 @@
-* {
+html, body {
+    box-sizing: border-box;
+    height: 100%;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    background-color: #e8f5e9;
     font-family: 'Roboto', sans-serif;
-}  
+    overflow: hidden;
+}
 
-#editor{
-    max-width: 90%;
-    width: 90%;
-    position: absolute;
-    margin-left: 130px;
-    transition: 1s;
-    top: 0;
-    height: 93%;
-  }
 
-  #quillEditor { /* Inside editor */
-      padding: 20px;
-  }
+/* main content contanier (site container) */
+.maincontainer {
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+}
 
-  .ql-toolbar.ql-snow {
-      background-color: #fafafa;
-  }
+.maincontainer *{
+    padding: 0;
+}
 
-  #print {
-      position: fixed;
-      margin-top: 13px;
-      margin-left: 28%;
-      cursor: pointer;
-  }
+/* container for sidebars */
+.navContainer {
+    display: flex;
+    flex-direction: row;
+}
 
-  #print:hover {
-      color: blue;
-  }
 
-/* Knappar */
-
-.savebtn {
+/* first sideBar (main sidebar) */
+.firstSideBarContainer {
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+    background-color: #81c784;
     z-index: 1;
-    position: absolute;
-    top: 0;
-    margin-top: 50%;
-    margin-left: 90%;
-    font-size: 25px;
-    text-decoration: none;
-    letter-spacing: 0.15rem;
-    color: black;
 }
 
-.addToFav {
+.FirstSideBar {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    height: 350px;
     z-index: 1;
-    position: absolute;
-    top: 0;
-    margin-top: 50%;
-    margin-left: 85%;
-    font-size: 25px;
-    text-decoration: none;
-    letter-spacing: 0.15rem;
-    color: black;
 }
 
-.savebtn:hover, .addToFav:hover {
-    text-shadow: 4px 4px 2px grey;
-    transition: all 0.5s ease-in-out 0s;
-}
-
-/*Sidans logga*/
+/* First sidebar content */
 
 .logo {
-    max-width: 50%;
-    max-height: 50%;
-    margin-left: 26px;
+    max-width: 5em;
+    max-height: 5em;
     cursor: pointer;
     border-bottom: 1px solid grey;
 }
 
-/* Fixed sideBar */
+  /* Toolbar */
 
-.sideBar {
-    height: 100%;
-    width: 130px;
-    position: fixed;
-    z-index: 1;
+.ql-snow .ql-picker {
+    color: #81C784;
+}
+
+.ql-snow .ql-stroke {
+    stroke: #81C784;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
     top: 0;
     left: 0;
-    background-color: #c8e6c9;
-    padding-top: 20px;
-    overflow: visible;
-    border-right: lightgrey solid 0.5px;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
 }
 
-/* Ikoner*/
-.sideBar > .fa-heart:before {
-   padding: 0px 15px 8px 16px;
-    margin: 0;
-    display: block;
-    margin-top: 50%;
-    margin-left: 34px;
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 16px;
+    width: 16px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+input:checked + .slider {
+    background-color: black;
+}
+
+input:focus + .slider {
+    box-shadow: 0 0 1px black;
+}
+
+input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+}
+  /* Rounded sliders */
+.slider.round {
+    border-radius: 34px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
+
+li {
+    list-style-type: none;
     cursor: pointer;
-    border-bottom: 1px solid grey;
+}
+
+/* second sidebar (sub sidebar) */
+.secondSideBarContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 250px;
+    transform: translateX(0%);
+    transition: transform 0.4s ease-in;
+    background-color: #c8e6c9;
+    overflow-y: auto;
+}
+
+.secondSideBarContainer-active {
+    transform: translateX(-100%);
+}
+
+
+.secondSideBar {
+    display: flex;
+    flex-direction: column;
+    background-color: #c8e6c9;
+    width: 100%;
+}
+
+/* .dark-mode-secondSidebar {
+    background-color: #545454;
+    color: white;
+} */
+/* Second Sidebar content */
+
+/* Note list */
+.noteContent {
+    display: flex;
+    justify-content: center;
+}
+
+.div {
+    word-break: break-all;
+    transition: 0.3s;
+    padding: 7%;
+    height: 90px;
+    cursor: pointer;
+    border-bottom: 1px solid lightgray;
+    letter-spacing: 0.8px;
 } 
 
-.fa-plus:before, .fa-cog:before, .fa-folder:before{ 
-    padding: 0px 15px 8px 16px;
-    display: block;
-    margin-top: 50%;
-    margin-left: 34px;
-    cursor: pointer;
-    border-bottom: 1px solid grey;
+#noteContent div:hover {
+    transition: 0.5s ease;
+    background-color: #81c784;
 }
 
-.fa-plus:hover, .fa-folder:hover, .fa-cog:hover, .fa-heart:hover  {
- margin-left: 10px;
- transition: 1s;
+.div > .fa-heart, .fa-trash-alt {
+    float: right;
+    margin-left: 1em;
 }
 
-/* Second Sidebar */
-
-#search {
-    margin-bottom: 20px;
+/* Searchbar */
+.search {
+    margin: 10% 0 10% 0;
     text-align: center;
-    margin-left: 30%;
-    padding: 10px;
+    padding: 5%;
     border-radius: 8px;
-    border: 1px solid lightgray;
+    border: hidden;
     cursor: pointer;
+    outline: none;
+    background-color: #c8e6c9;
 }
 
-#search:hover {
+.search:hover {
     box-shadow: 5px 10px 8px #888888;
     transition: 1s;
 }
 
-input:invalid ~ span:after {
-    content: '✖';
-    padding-left: 5px;
-    position: absolute;
-}
-
-input:valid ~ span:after {
-    content: '✓';
-    padding-left: 5px;
-    position: absolute;
-}
-
-.hight {
-    margin-top: 2%;
-}
-
-.line {
-    border-bottom: 1px solid grey;
-}
-
-.secondSideBar {
-    height: 100%;
-    width: 0;
-    position: fixed;
-    z-index: 1;
-    top: 0;
-    left: 131px;
-    background-color: #fafafa;
-    overflow-x: hidden;
-    transition: 1s;
-    border-right: lightgrey solid 0.5px;
-}
-
-.div {
-   padding: 0px 34px 0px 0px;
-   word-break: break-all;
-   transition: 0.3s;
-   border: 1px solid grey;
-   border-radius: 5px;
-   width: 250px;
-   height: 100px;
-   margin: 5px;
-   cursor: pointer;
-}
-
+/* When note is picked */
 .picked {
-   padding: 0px 34px 0px 5px;
-   word-break: break-all;
-   transition: 0.3s;
-   border: 4px solid limegreen;
-   border-radius: 5px;
-   width: 250px;
-   height: 100px;
-   margin: 5px;
-   cursor: pointer;
- }
-
-#justText div:hover {
-    transition: 0.7s;
-    background-color: #e0e0e0;
-    margin-left: 7px;
-}
-
-.secondSideBar a {
-    padding: 6px 6px 8px 16px;
-    text-decoration: none;
-    font-size: 15px;
-    color: black;
-    display: block;
+    padding: 5%;
+    word-break: break-all;
     transition: 0.3s;
+    cursor: pointer;
+    border-bottom: 1px solid lightgray;
+    background-color: #81c784;
+    letter-spacing: 0.8px;
 }
 
-.closebtn {
-    margin-left: 250px;
+/* main content container (editor + toolbar) */
+.mainEditorContainer {
+    display: flex;
+    flex: 1;
+    padding: 50px 50px 0 50px;
+    overflow-y: auto;
 }
 
-/* Popup */
+/* Editor */
 
-.modal {
-    display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
-    padding-top: 100px; /* Location of the box */
+#editor {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.ql-editor {
+    overflow-y: visible;
+    max-width: 85%;
+    word-break: break-all;
+    height: auto;
+    min-height: 100%;
+    padding: 25px;
+    background-color: lightgoldenrodyellow;
+    border-radius: 2px;
+}
+
+
+#quillEditor {
+    border: none;
+    position: relative;
+}
+
+/* Editor Toolbar */
+.ql-toolbar.ql-snow {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    right: -25px;
+    top: 20px;
+    border: none;
+    cursor: pointer;
+    z-index: 1;
+}
+
+/* print icon */
+
+#print {
+    position: absolute;
+    right: 75px;
+    top: 250px;
+    cursor: pointer;
+    color: #81c784;
+    z-index: 1;
+}
+
+#print:hover {
+    color: blue;
+}
+
+/*popup modal*/
+
+.modal{
+    display: none; 
+    position: fixed; 
+    z-index: 1;
+    padding-top: 100px; 
     left: 0;
     top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-  }
-  
-  /* Modal Content */
+    width: 100%; 
+    height: 100%; 
+    overflow: auto; 
+    
+    background-color: rgba(0,0,0,0.4);
+    
+}
+
+/* Modal Content */
   .modal-content {
     background-color: #fefefe;
     margin: auto;
-    padding: 20px;
+    padding: 7px;
     border: 1px solid #888;
     border-radius: 20px;
-    width: 30%;
+    min-width: 30%;
+    max-width: 30%;
+    letter-spacing: 1px;
+    max-height: 77%;
   }
-  ul{
-      list-style-type: none;
-  }
+  .modal-content > h2 {
+      font-size: 30px;
+        }
+
   
-  /* The Close Button */
-  .close {
-    color: #aaaaaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-  }
-  
-  .close:hover,
-  .close:focus {
-    color: #000;
-    text-decoration: none;
-    cursor: pointer;
-  }
+ 
 
-  .modal-content > p, li, .welcome {
-      text-align: center;
-  }
 
-  .welcome {
-    text-shadow: 3px 3px 2px lightgrey;
-  }
+/* The Close Button */
+   .close {
+  color: #aaaaaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
 
-  .isFav {
-    background-color: red;
 }
 
-.hello {
-    background-color: greenyellow;
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+.modal-content > p, li, .welcome {
+    text-align: center;
+}
+.welcome {
+  text-shadow: 1px 1px 1px grey;
+  border-bottom: 1px solid lightgray;
+  margin-bottom: 1px;
+  padding-bottom: 2px;
+  padding-top: 1px;
+  margin-top: 1px;
+  color: lightgreen;
+  
+}
+.picModal{
+    max-width: 70%;
+    max-height: 70%;
+    margin-left: 17%;
+    margin-top: 0px;
 }
 
-.yes {
-    background-color: hotpink;
+
+
+@media only screen and (max-width: 768px) {
+    html, body {
+        box-sizing: border-box;
+        height: 100%;
+        width: 100%;
+        padding: 0;
+        margin: 0;
+        background-color: #e8f5e9;
+        font-family: 'Roboto', sans-serif;
+        overflow: hidden;
+    }
+    .maincontainer {
+        display: flex;
+        flex-direction: column-reverse;
+        height: 100%;
+        position: relative;
+        padding: 0;
+        margin: 0;
+        overflow: hidden;
+    }
+
+    .navContainer {
+        display: flex;
+        flex-direction: column-reverse;
+        justify-content: flex-end;
+        width: 100%;
+    }
+
+    .FirstSideBar {
+        display: flex;
+        flex-direction: row;
+        z-index: 1;
+        flex: 2;
+    }
+
+    .FirstSideBar {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+        z-index: 1;
+        height: 50px;
+    }
+
+    .secondSideBarContainer {
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        height: 100%;
+        transform: translatey(100%);
+        transition: transform 0.4s ease-in;
+        background-color: #c8e6c9;
+        position: fixed;
+        z-index: 1;
+    }
+    
+    .secondSideBarContainer-active {
+        transform: translatey(-100%);
+    }
+    
+    
+    .secondSideBar {
+        display: flex;
+        flex-direction: column-reverse;
+        background-color: #c8e6c9;
+        align-items: center;
+        overflow-y: auto;
+        overflow-x: hidden;
+        height: 100%;
+    }
+
+    .noteContent {
+        display: flex;
+        
+    }
+
+    .div {
+        word-break: break-all;
+        transition: 0.3s;
+        padding: 2% 10% 2% 10%;
+        height: 90px;
+        cursor: pointer;
+        border-bottom: 1px solid lightgray;
+        letter-spacing: 0.8px;
+    } 
+
+    #noteContent div:hover {
+        transition: 0.5s ease;
+        background-color: #81c784;
+    }
+
+    .search {
+        margin: 3% 0 3% 0;
+        text-align: center;
+        padding: 2% 10% 2% 10%;
+        border-radius: 8px;
+        border: hidden;
+        cursor: pointer;
+        outline: none;
+        background-color: #c8e6c9;
+    }
+
+    .mainEditorContainer {
+        display: flex;
+        flex: 1;
+        padding: 10px 10px 0 10px;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    #quillEditor {
+        box-sizing: border-box;
+        border: none;
+        width: 100%;
+        top: 30px;
+    }
+
+    .ql-editor {
+        overflow-y: visible;
+        max-width: 100%;
+        word-break: break-all;
+        height: auto;
+        min-height: 100%;
+        padding: 20px;
+        background-color: lightgoldenrodyellow;
+        border-radius: 2px;
+    }
+
+    .ql-toolbar.ql-snow {
+        display: flex;
+        flex-direction: row;
+        position: fixed;
+        border: none;
+        top: 0;
+        left: 0;
+        background-color: #232323;
+        z-index: 1;
+    }  
+
+    #print {
+        position: absolute;
+        left: 333px;
+        top: 12px;
+        cursor: pointer;
+        color: #81c784;
+        z-index: 2;
+        background-color: #232323;
+    }
+
+    .ql-toolbar.ql-snow .ql-formats {
+        margin-right: 0;
+    } 
+
+    .logo {
+        display: none;
+        max-width: 5em;
+        max-height: 5em;
+        cursor: pointer;
+        border-bottom: 1px solid grey;
+    }
+    /*popup modal*/
+.modal-content{
+    min-width: 70%;
+    height: 60%;
+}
+.modal-content > h2 {
+    font-size: 20px;
+    padding: 5px;
+    
+}
+.modal-content > p, li, .welcome {
+    text-align: center;
+    font-size: 15px;
+}
+.picModal{
+    max-width: 50%;
+    max-height: 50%;
+    
+    margin-top: 0px;
+    margin-left: 25%;
+}
+    
+} 
+
+.dark-mode-editor {
+    background-color: lightgreen;
+    color: black;
+}
+
+.dark-mode-secondSidebar {
+    background-color: #545454;
+    color: white;
+}
+
+.dark-mode-secondSidebar {
+    background-color: #545454;
+    color: white;
+}
+
+.darkmode-switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 24px;
+}
+
+.darkmode-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+
+.dark-mode {
+    background-color: #424242;
+    transition: 1s;
+    color: white;
 }
